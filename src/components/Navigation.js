@@ -9,7 +9,7 @@ export default class Navigation extends Component {
                 <div className="nav_div">
                     <ul>
                         <li><NavLink to='/'>Home</NavLink></li>
-                        <li><NavLink to='/game'>Game</NavLink></li>
+                        <li><NavLink to='/numberGame'>Number Game</NavLink></li>
                         <li><NavLink to='/user'>User</NavLink></li>
                     </ul>
                 </div>

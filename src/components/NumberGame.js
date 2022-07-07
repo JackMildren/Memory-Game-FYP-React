@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function Game () {
+export default function NumberGame () {
     // TODO - Make this a database request
     const DIFFICULTY = 3;
 
