@@ -3,6 +3,7 @@ import { Routes, Route} from 'react-router-dom';
 
 import Home from './Home';
 import NumberGame from './NumberGame';
+import ShapeGame from './ShapeGame';
 import User from './User';
 
 const Main = () => {
@@ -10,6 +11,7 @@ const Main = () => {
         <Routes>
             <Route exact path='/' element={<Home />}></Route>
             <Route exact path='/numberGame' element={<NumberGame />}></Route>
+            <Route exact path='/shapeGame' element={<ShapeGame />}></Route>
             <Route exact path='/user' element={<User />}></Route>
         </Routes>
     );
