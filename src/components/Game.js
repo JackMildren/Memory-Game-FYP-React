@@ -1,19 +1,22 @@
 import { useEffect, useState } from "react";
 
 export default function Game () {
+    // TODO - Make this a database request
+    const DIFFICULTY = 3;
+
     const [gameState, setGameState] = useState("start");
     const [currentQuestion, setCurrentQuestion] = useState("x + y");
     const [questionNo, setQuestionNo] = useState(1);
     const [score, setScore] = useState(0);
     const [highScore, setHighScore] = useState(0);
 
-    const initialState = [
+    const INITIAL_STATE = [
         {answer: "0", color: "lightblue"},
         {answer: "0", color: "lightblue"},
         {answer: "0", color: "lightblue"},
         {answer: "0", color: "lightblue"},
         ];
-    const [boxList, setBoxList] = useState([...initialState]);
+    const [boxList, setBoxList] = useState([...INITIAL_STATE]);
 
     const [confirmBoxText, setConfirmBoxText] = useState("CONFIRM");
     const [answerRevealed, setAnswerRevealed] = useState(false);
@@ -34,20 +37,34 @@ export default function Game () {
     }
 
     function getQuestion() {
+        const MODIFIER_LIST = [" + ", " - ", " x "];
+
         let n1 = getRndInteger(1, 10);
         let n2 = getRndInteger(1, 10);
-        let add = getRndInteger(0, 1);
+        let modifier = getRndInteger(0, DIFFICULTY - 1);
 
-        let mod = add ? " + " : " - ";
-        setCurrentQuestion((n1 + mod + n2));
-        let answer = add ? n1 + n2 : n1 - n2;
+        setCurrentQuestion((n1 + MODIFIER_LIST[modifier] + n2));
+        function calculateAnswer(x, y) {
+            switch (modifier) {
+                case 0:
+                    return x + y;
+                case 1:
+                    return x - y;
+                case 2:
+                    return x * y;
+                default:
+                    return 0;
+            }
+        }
+
+        let answer = calculateAnswer(n1, n2);
 
         let newVal = getRndInteger(0, 3)
         console.log("correct box should now be " + newVal)
         setCorrectBox(newVal);
         console.log("correct box is now " + correctBox)
 
-        let tempBoxList = [...initialState];
+        let tempBoxList = [...INITIAL_STATE];
         for (let box = 0; box < boxList.length; box++) {
             console.log("correct answer: " + answer)
             console.log("correct box: " + correctBox)
