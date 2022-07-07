@@ -1,0 +1,48 @@
+.gameBox {
+    font-size: medium;
+    overflow: hidden;
+    background-color: lightblue;
+    border-color: black;
+}
+
+.gameBox section {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+#questionNo {
+    display: inline;
+}
+
+.gameBox p, button {
+    display: inline-block;
+    text-align: center;
+    padding: 14px 16px;
+    font-size: 17px;
+    border: thin solid black;
+    border-radius: 500px;
+    background-color: lightblue;
+    text-decoration: none;
+}
+
+.gameBox button {
+    cursor: pointer;
+}
+
+.answerBox {
+    margin: auto;
+    width: 15%;
+}
+
+.gameBox button:hover {
+    background-color: white;
+}
+
+#confirmBox, #nextQuestionBox {
+    display: none;
+}
+
+#runningGame, #endScreen {
+    display: none;
+}

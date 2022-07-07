@@ -1,0 +1,200 @@
+import { useEffect, useState } from "react";
+
+export default function Game () {
+
+    const TOTAL_QUESTIONS = 10;
+
+    let questionNo = 1;
+    let correctBox = 0;
+    let selectedBox;
+    let answerGiven = false;
+    let score = 0;
+    let highScore = 0;
+    const [currentQuestion, updateQuestion] = useState("x+y");
+    let box = {
+        answer: "0",
+        color: "white"
+    };
+    let boxList = [box, box, box, box];
+    let confirmBoxText = "CONFIRM";
+
+    useEffect (() => {
+        document.getElementById("runningGame").hidden = true;
+        document.getElementById("endScreen").hidden = true;
+        console.log("this is a thing")
+    });
+
+    function gameLoop() {
+        document.getElementById("confirmBox").hidden = true;
+        if (questionNo <= TOTAL_QUESTIONS) {
+            getQuestion()
+        } else {
+            loadEndScreen()
+        }
+    }
+
+    function getQuestion() {
+
+        let n1 = getRndInteger(1, 10);
+        let n2 = getRndInteger(1, 10);
+        let add = getRndInteger(0, 1);
+
+        let mod = add ? " + " : " - ";
+        updateQuestion(toString(n1 + mod + n2));
+        console.log(currentQuestion)
+        let answer = add ? n1 + n2 : n1 - n2;
+
+        correctBox = getRndInteger(0, 3);
+        for (let box = 0; box < boxList.length; box++) {
+            let offBy = getRndInteger(1, 10)
+            boxList[box].answer = getRndInteger(0, 1) ? answer + offBy : answer - offBy;
+        }
+        boxList[correctBox].answer = answer;
+        // console.log(boxList[0].answer);
+    }
+
+    function selectAnswer(inputNo) {
+        if (answerGiven) {
+            return;
+        }
+
+        // document.getElementById("confirmBox").hidden = false;
+
+        selectedBox = inputNo;
+
+        confirmBoxText = "CONFIRM";
+
+        resetSelection();
+    }
+
+    function getBoxColor(boxNumber) {
+        return boxList[boxNumber].color;
+    }
+
+    function getConfirmColor() {
+        let color = "white";
+
+        if (answerGiven) {
+            if (selectedBox === correctBox) {
+                color = "green";
+            } else {
+                color = "red";
+            }
+        }
+
+        return color;
+    }
+
+    function confirmBoxSelect() {
+        if (answerGiven) {
+            document.getElementById("confirmBox").hidden = true;
+            resetSelection()
+    
+            answerGiven = false;
+    
+            questionNo ++;
+            gameLoop()
+        } else {
+            if (selectedBox === correctBox) {
+                score ++;
+            }
+    
+            answerGiven = true;
+    
+            confirmBoxText = "NEXT QUESTION";
+            if (questionNo === TOTAL_QUESTIONS) {
+                confirmBoxText = "FINISH"
+            }
+        }
+    }
+
+    function startGame() {
+        document.getElementById("startScreen").hidden = true;
+        document.getElementById("runningGame").hidden = false;
+        gameLoop();
+    }
+
+    function loadEndScreen() {
+        document.getElementById("runningGame").hidden = true;
+        document.getElementById("endScreen").hidden = false;
+        questionNo = 1;
+    }
+
+    function restartGame() {
+        document.getElementById("endScreen").hidden = true;
+        document.getElementById("startScreen").hidden = false;
+
+        if (score > highScore) {
+            highScore = score
+        }
+        score = 0;
+    }
+
+    function resetSelection() {
+        const answerBtnList = document.getElementsByClassName("answerBox");
+        for (let btn = 0; btn < answerBtnList.length; btn++) {
+            answerBtnList[btn].style.backgroundColor = "lightblue";
+        }
+    }
+
+    function getRndInteger(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) ) + min;
+    }
+
+    return (
+        <div className="Game">
+            <main className="gameContainer">
+
+                <main className="gameBox" id="startScreen">
+                    <section>
+                        <p>MATHS!</p>
+                    </section>
+
+                    <section>
+                        <p id="highScore">HIGH SCORE: {highScore}</p>
+                    </section>
+
+                    <section>
+                        <button onClick={startGame}>START GAME</button>
+                    </section>
+                </main>
+
+                <main className="gameBox" id="runningGame">
+                    <section>
+                        <p id="questionNo">Question {questionNo}</p>
+                    </section>
+
+                    <section>
+                        <p id="question">{currentQuestion}</p>
+                    </section>
+
+                    <section className="answerSection">
+                        <button className="answerBox" style={{backgroundColor: getBoxColor(0)}} onClick={selectAnswer(0)}>{boxList[0].answer}</button>
+                        <button className="answerBox" style={{backgroundColor: getBoxColor(1)}} onClick={selectAnswer(1)}>{boxList[1].answer}</button>
+                        <button className="answerBox" style={{backgroundColor: getBoxColor(2)}} onClick={selectAnswer(2)}>{boxList[2].answer}</button>
+                        <button className="answerBox" style={{backgroundColor: getBoxColor(3)}} onClick={selectAnswer(3)}>{boxList[3].answer}</button>
+                    </section>
+
+                    <section>
+                        <button id="confirmBox" style={{backgroundColor: getConfirmColor}} onClick={confirmBoxSelect}>{confirmBoxText}</button>
+                    </section>
+                </main>
+
+                <main className="gameBox" id="endScreen">
+                    <section>
+                        <p>GAME OVER</p>
+                    </section>
+
+                    <section>
+                        <p id="score">{score}</p>
+                    </section>
+
+                    <section>
+                        <button onClick={restartGame}>TRY AGAIN?</button>
+                    </section>
+                </main>
+
+            </main>
+        </div>
+    )
+}

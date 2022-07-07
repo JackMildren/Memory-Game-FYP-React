@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="shortcut icon" type="image/jpg" href="../images/favicon.ico"/>
+
+    <link rel="stylesheet" href="../styles/master.css">
+    <link rel="stylesheet" href="../styles/gameStyles.css">
+    <script src="../scripts/scripts.js"></script>
+    <script src="../scripts/accessWidget.js"></script>
+    <script src="../scripts/game.js"></script>
+</head>
+<body onload="init()">
+<h1>Memorize!</h1>
+
+<nav class="nav_container">
+    <div class="nav_div">
+        <a href="/">Home</a>
+        <a class="active" href="/game">Game</a>
+        <a href="/user">User</a>
+        <a href="/test">Test</a>
+    </div>
+</nav>
+
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<div id="g_id_onload"
+     data-client_id="967180034184-sbnk5okga1of3v3pdf6vmhfo9r3d4b4r.apps.googleusercontent.com"
+     data-context="signin"
+     data-ux_mode="popup"
+     data-callback="signIn"
+     data-auto_select="true">
+</div>
+
+<div class="g_id_signin"
+     data-type="standard"
+     data-shape="pill"
+     data-theme="outline"
+     data-text="signin_with"
+     data-size="large"
+     data-logo_alignment="left">
+</div>
+
+<main class="gameContainer">
+    <main class="gameBox" id="startScreen">
+        <section>
+            <p>MATHS!</p>
+        </section>
+
+        <section>
+            <p id="highScore">HIGH SCORE: </p>
+        </section>
+
+        <section>
+            <button onclick="startGame()">START GAME</button>
+        </section>
+
+    </main>
+
+    <main class="gameBox" id="runningGame">
+        <section>
+            <p id="questionNo">Question</p>
+        </section>
+
+        <section>
+            <p id="question">TEXT</p>
+        </section>
+
+        <section class="answerSection">
+            <button class="answerBox" onclick="selectAnswer(0)">ANSWER 1</button>
+            <button class="answerBox" onclick="selectAnswer(1)">ANSWER 2</button>
+            <button class="answerBox" onclick="selectAnswer(2)">ANSWER 3</button>
+            <button class="answerBox" onclick="selectAnswer(3)">ANSWER 4</button>
+        </section>
+
+        <section>
+            <button id="confirmBox" onclick="confirmAnswer()">CONFIRM</button>
+        </section>
+
+        <section>
+            <button id="nextQuestionBox" onclick="nextQuestion()">NEXT QUESTION</button>
+        </section>
+    </main>
+
+    <main class="gameBox" id="endScreen">
+        <section>
+            <p>GAME OVER</p>
+        </section>
+
+        <section>
+            <p id="score">SCORE</p>
+        </section>
+
+        <section>
+            <button onclick="restartGame()">TRY AGAIN?</button>
+        </section>
+    </main>
+</main>
+
+<button id="accessWidgetBtn">Accessibility Settings</button>
+
+<div id="accessWidgetModal" class="modal">
+    <div class="accessWidgetContent">
+        <span class="close">&times;</span>
+        <h3>Accessibility Settings</h3>
+        <button id="lineSpacingBtn">Line Spacing</button>
+        <button id="textSizeBtn">Text Size</button>
+        <button id="wordSpacingBtn">Word Spacing</button>
+        <button id="dyslexicFontBtn">Dyslexic-Friendly Font</button>
+        <button id="resetBtn">Reset All</button>
+    </div>
+</div>
+</body>
+</html>
