@@ -18,8 +18,7 @@ export default function Game () {
     const [confirmBoxText, setConfirmBoxText] = useState("CONFIRM");
     const [answerRevealed, setAnswerRevealed] = useState(false);
     const [selectedBox, setSelectedBox] = useState({});
-
-    let correctBox = 0;
+    const [correctBox, setCorrectBox] = useState(0);
 
     const TOTAL_QUESTIONS = 10;
 
@@ -45,7 +44,7 @@ export default function Game () {
 
         let newVal = getRndInteger(0, 3)
         console.log("correct box should now be " + newVal)
-        correctBox = newVal;
+        setCorrectBox(newVal);
         console.log("correct box is now " + correctBox)
 
         let tempBoxList = [...initialState];
