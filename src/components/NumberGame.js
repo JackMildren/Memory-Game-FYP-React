@@ -61,28 +61,20 @@ export default function NumberGame() {
     let answer = calculateAnswer(n1, n2);
 
     let newVal = getRndInteger(0, 3)
-    console.log("correct box should now be " + newVal)
     setCorrectBox(newVal);
-    console.log("correct box is now " + correctBox)
 
     let tempBoxList = [...INITIAL_STATE];
     for (let box = 0; box < boxList.length; box++) {
-      console.log("correct answer: " + answer)
-      console.log("correct box: " + newVal)
       let newNumber = answer;
 
       if (box !== newVal) {
         let offBy = getRndInteger(1, 10);
-        console.log("not the correct answer, adjusting")
-        console.log("off by: " + offBy)
         newNumber = getRndInteger(0, 1) ? answer + offBy : answer - offBy;
       }
 
       tempBoxList[box] = updateBox(box, newNumber, "lightblue");
     }
 
-    console.log("box list about to be set")
-    console.log(tempBoxList)
     setBoxList(tempBoxList);
     setSelectedBox(5);
   }
@@ -93,14 +85,19 @@ export default function NumberGame() {
     if (answerRevealed) {
       return;
     }
-    console.log("correct box: " + correctBox)
 
     setSelectedBox(inputNo);
 
     setConfirmBoxText("CONFIRM");
     const newBoxList = [...boxList];
-    newBoxList[inputNo] = {...newBoxList[inputNo], color: "yellow"}
-    setBoxList(newBoxList)
+
+    let newColor = "lightblue";
+    for (let box = 0; box < boxList.length; box++) {
+      (box === inputNo) ? (newColor = "yellow") : (newColor = "lightblue");
+      newBoxList[box] = {...newBoxList[box], color: newColor}
+    }
+    
+    setBoxList(newBoxList);
   }
 
   function confirmBoxSelect() {
@@ -109,7 +106,6 @@ export default function NumberGame() {
     }
 
     if (answerRevealed) {
-      console.log("-------MOVING TO NEXT QUESTION-------")
       document.getElementById("confirmBox").hidden = true;
 
       setConfirmBoxText("CONFIRM");
@@ -117,8 +113,6 @@ export default function NumberGame() {
 
       setQuestionNo(questionNo + 1);
 
-      console.log("final boxList state");
-      console.log(boxList)
       gameLoop();
     } else {
       let tempBoxList = resetSelection();
@@ -179,7 +173,7 @@ export default function NumberGame() {
     let tempBox = {...boxList[boxNo]};
 
     if (newAnswer && tempBox.answer !== newAnswer) {
-      console.log("updating box " + boxNo + " answer from " + tempBox.answer + " to " + newAnswer);
+      // console.log("updating box " + boxNo + " answer from " + tempBox.answer + " to " + newAnswer);
       tempBox.answer = newAnswer;
     }
     if (newColor && tempBox.color !== newColor) {
@@ -187,8 +181,6 @@ export default function NumberGame() {
       tempBox.color = newColor;
     }
 
-    console.log("returning box")
-    console.log(tempBox)
     return tempBox;
   }
 
