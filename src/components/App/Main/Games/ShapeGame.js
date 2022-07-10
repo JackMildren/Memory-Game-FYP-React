@@ -1,7 +1,10 @@
+
+
 export default function ShapeGame () {
     return (
         <div className="ShapeGame">
-            <p>Hello World</p>
+            <h2>Shape Game!</h2>
+
         </div>
     )
 }
