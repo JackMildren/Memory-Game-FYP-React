@@ -1,3 +1,7 @@
+p {
+  font-size: 100%;
+}
+
 .body {
   margin-top: -1px;
   padding: 10px 10px;
@@ -8,7 +12,6 @@
 }
 
 .nav_div {
-  font-size: medium;
   overflow: hidden;
   background-color: lightblue;
   border-color: black;
@@ -24,7 +27,6 @@
   padding: 14px 16px;
   margin-right: 5px;
   text-decoration: none;
-  font-size: 17px;
 
   border-color: lightblue;
   border-top: solid thin;
@@ -52,6 +54,12 @@ a:visited {
   position: fixed;
   bottom: 0;
   left: 0;
+  font-size: 100%;
+}
+
+.accessWidgetButtons {
+  padding-top: 10%;
+  text-align: center;
 }
 
 .modal {
@@ -60,23 +68,23 @@ a:visited {
   z-index: 1; /* Sit on top */
   left: 0;
   bottom: 0;
-  width: 30%; /* Full width */
-  height: 30%; /* Full height */
+  width: 20%;
+  height: 80%;
   overflow: auto; /* Enable scroll if needed */
   background-color: white;
+  font-size: 70%;
 }
 
 .modal-content {
   margin: auto;
   border: 1px solid #888;
-  width: 80%;
 }
 
 /* The Close Button */
 .close {
   color: #aaaaaa;
   float: right;
-  font-size: 28px;
+  font-size: 200%;
   font-weight: bold;
 }
 
@@ -88,7 +96,6 @@ a:visited {
 }
 
 .gameBox {
-  font-size: medium;
   overflow: hidden;
   background-color: lightblue;
   border-color: black;
@@ -107,8 +114,9 @@ a:visited {
 .gameBox p, button {
   display: inline-block;
   text-align: center;
-  padding: 14px 16px;
-  font-size: 17px;
+  padding-left: 1000%;
+  padding: 2%;
+  font-size: 150%;
   border: thin solid black;
   border-radius: 500px;
   background-color: lightblue;
@@ -126,4 +134,10 @@ a:visited {
 
 .gameBox button:hover {
   background-color: white;
+}
+
+.Login {
+  position: fixed;
+  top: 0;
+  right: 0;
 }

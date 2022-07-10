@@ -1,43 +1,34 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch } from 'react-redux';
+import { resetAll, setLineHeight, setFontSize, setWordSpacing, setFontFamily } from './textSettingsUpdater';
 
 export default function AccessibilityWidget() {
     const [widgetOpen, updateWidget] = useState(false);
+    const dispatch = useDispatch();
 
-    let textSettings = {
+    let INITIAL_STATE = {
         lineHeight: {
-            current: 1.15,
-            default: 1.15,
-            max: 2.15
+            current: 0,
+            values: ['120%', '200%', '300%']
         },
         textSize: {
-            current: 16,
-            default: 16,
-            max: 28
+            current: 0,
+            values: ['100%', '200%', '300%']
         },
         wordSpacing: {
             current: 0,
-            default: 0,
-            max: 16
+            values: ['100%', '200%', '300%']
         },
         textFont: {
-            current: "Arial",
-            default: "Arial"
+            current: 0,
+            values: ['Arial', 'ODF']
         }
     };
 
-    useEffect(() => {
-        // console.log("HERE!")
-        // let accessWidgetModal = document.getElementById("accessWidgetModal");
-        // // const accessWidgetBtn = document.getElementById("accessWidgetBtn");
-        // // const accessWidgetClose = document.getElementsByClassName("close")[0];
+    const [settings, setSettings] = useState({...INITIAL_STATE}) 
 
-        // // accessWidgetBtn.onclick = () => accessWidgetModal.style.display = "block";
-        // // accessWidgetClose.onclick = () => accessWidgetModal.style.display = "none";
-        // window.onclick = function(event) {
-        //     if (event.target === accessWidgetModal) {
-        //         return accessWidgetModal.style.display = "none";
-        //     }
-        // }
+    useEffect(() => {
+        // console.log("loaded widget")
     }, [widgetOpen]);
 
     function switchWidget() {
@@ -45,38 +36,50 @@ export default function AccessibilityWidget() {
     }
 
     function toggleFonts() {
-        if (textSettings.textFont.current === "Arial") {
-            textSettings.textFont.current = "ODF";
-        } else {
-            textSettings.textFont.current = "Arial";
-        }
-        updateBodyText();
+        let tempSettings = {...settings};
+
+        tempSettings.textFont.current ++
+        tempSettings.textFont.current %= tempSettings.textFont.values.length;
+
+        let newFontFamily = tempSettings.textFont.values[tempSettings.textFont.current];
+
+        setSettings(tempSettings);
+        dispatch(setFontFamily(newFontFamily))
     }
 
     function resetAllTextSettings() {
-        for (let setting in textSettings) {
-            textSettings[setting].current = textSettings[setting].default;
-        }
-        updateBodyText();
+        setSettings(INITIAL_STATE);
+        dispatch(resetAll());
     }
 
-    function updateTextSetting(setting, increment) {
-        textSettings[setting].current += increment;
-        if (textSettings[setting].current > textSettings[setting].max) {
-            textSettings[setting].current = textSettings[setting].default;
-        }
-        updateBodyText();
+    function increaseFontSize() {
+        let tempSettings = {...settings};
+
+        tempSettings.textSize.current ++
+        tempSettings.textSize.current %= tempSettings.textSize.values.length;
+
+        let newFontSize = tempSettings.textSize.values[tempSettings.textSize.current];
+
+        setSettings(tempSettings);
+        dispatch(setFontSize(newFontSize))
     }
 
-    function updateBodyText() {
-        const bodyText = document.getElementsByTagName("p");
+    function increaseLineHeight() {
+        let tempSettings = {...settings};
 
-        for (let element = 0; element < bodyText.length; element++) {
-            bodyText[element].style.lineHeight = textSettings.lineHeight.current.toString();
-            bodyText[element].style.fontSize = (textSettings.textSize.current.toString() + 'px');
-            bodyText[element].style.wordSpacing = (textSettings.wordSpacing.current.toString() + 'px');
-            bodyText[element].style.fontFamily = textSettings.textFont.current;
-        }
+        tempSettings.lineHeight.current ++
+        tempSettings.lineHeight.current %= tempSettings.lineHeight.values.length
+
+        dispatch(setLineHeight(tempSettings.lineHeight.values[tempSettings.lineHeight.current]))
+    }
+
+    function increaseWordSpacing() {
+        let tempSettings = {...settings};
+
+        tempSettings.wordSpacing.current ++
+        tempSettings.wordSpacing.current %= tempSettings.wordSpacing.values.length
+
+        dispatch(setWordSpacing(tempSettings.wordSpacing.values[tempSettings.wordSpacing.current]))
     }
 
     return (
@@ -89,17 +92,19 @@ export default function AccessibilityWidget() {
                 <div id="accessWidgetModal" className="modal">
                     <div className="accessWidgetContent">
                         <button className="close" onClick={switchWidget}>&times;</button>
-                        <h3>Accessibility Settings</h3>
-                        <button id="lineSpacingBtn" onClick={updateTextSetting("lineHeight", 0.5)}>Line Spacing</button>
-                        <button id="textSizeBtn" onClick={updateTextSetting("textSize", 6)}>Text Size</button>
-                        <button id="wordSpacingBtn" onClick={updateTextSetting("wordSpacing", 8)}>Word Spacing</button>
-                        <button id="dyslexicFontBtn" onClick={toggleFonts()}>Dyslexic-Friendly Font</button>
-                        <button id="resetBtn" onClick={resetAllTextSettings()}>Reset All</button>
+                        <h2>Accessibility Settings</h2>
+
+                        <div className="accessWidgetButtons">
+                            <button id="lineSpacingBtn" onClick={() => increaseLineHeight()}>Line Spacing</button>
+                            <button id="textSizeBtn" onClick={() => increaseFontSize()}>Text Size</button>
+                            <button id="wordSpacingBtn" onClick={() => increaseWordSpacing()}>Word Spacing</button>
+                            <button id="dyslexicFontBtn" onClick={() => toggleFonts()}>Dyslexic-Friendly Font</button>
+                            <button id="resetBtn" onClick={() => resetAllTextSettings()}>Reset All</button>
+                        </div>
                     </div>
                 </div>
             }
             
         </div>
-    )
-}
-
+    );
+};
