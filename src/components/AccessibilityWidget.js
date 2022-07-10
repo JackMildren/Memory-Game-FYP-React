@@ -28,7 +28,7 @@ export default function AccessibilityWidget() {
     const [settings, setSettings] = useState({...INITIAL_STATE}) 
 
     useEffect(() => {
-        // console.log("loaded widget")
+        
     }, [widgetOpen]);
 
     function switchWidget() {

@@ -8,9 +8,6 @@ import { useSelector } from 'react-redux';
 
 export default function App() {
   const newStyles = useSelector((state) => state.textSettings.value);
-  
-  console.log("loaded app")
-  console.log(newStyles)
 
   return (
     <div className='app' style={{...newStyles}}>
