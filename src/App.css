@@ -63,14 +63,14 @@ a:visited {
 }
 
 .modal {
-  display: block; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  display: block;
+  position: fixed;
+  z-index: 1;
   left: 0;
   bottom: 0;
   width: 20%;
   height: 80%;
-  overflow: auto; /* Enable scroll if needed */
+  overflow: auto;
   background-color: white;
   font-size: 70%;
 }
@@ -80,7 +80,6 @@ a:visited {
   border: 1px solid #888;
 }
 
-/* The Close Button */
 .close {
   color: #aaaaaa;
   float: right;
