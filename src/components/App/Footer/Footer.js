@@ -1,5 +1,5 @@
 import React, { Component }  from 'react';
-import AccessibilityWidget from './AccessibilityWidget';
+import AccessibilityWidget from './Widget/AccessibilityWidget';
 
 export default class Footer extends Component {
     render() {

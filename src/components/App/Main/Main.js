@@ -2,8 +2,8 @@ import React from 'react';
 import { Routes, Route} from 'react-router-dom';
 
 import Home from './Home';
-import NumberGame from './NumberGame';
-import ShapeGame from './ShapeGame';
+import NumberGame from './Games/NumberGame';
+import ShapeGame from './Games/ShapeGame';
 import User from './User';
 
 const Main = () => {
