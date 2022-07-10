@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
-// import {readFile} from 'fs';
+
+// eslint-disable-next-line
+import userDB from './../../userDB.json'
 
 export const contactDB = createSlice({
     name: 'contactDB',
@@ -15,15 +17,16 @@ export const contactDB = createSlice({
             state.value = {}
         },
         getFromFile: (state) => {
-            // readFile('./../userDB.json', (err, data) => {
-            //     if (err) throw err;
-            //     console.log(data);
-            // });
-            state.value = {}
+            // console.log("displaying userDB")
+            // console.log(userDB);
+            // state.value = {}
+        },
+        writeToFile: (state, action) => {
+            
         },
     },
 })
 
-export const { resetAll, } = contactDB.actions
+export const { resetAll, getFromFile, writeToFile, } = contactDB.actions
 
 export default contactDB.reducer
