@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react"
-import { isEqual } from "underscore";
+import _ from "lodash";
 
 export default function ShapeGame () {
 
@@ -37,6 +37,7 @@ export default function ShapeGame () {
         for (let i = 0; i < 5; i++) {
             const x = 70
             const y = 70
+            const radius = 50
             let sides;
             let colour;
             let newShape
@@ -47,12 +48,16 @@ export default function ShapeGame () {
 
                     colour = colours[Math.floor(Math.random() * colours.length)]
 
-                    newShape = [sides, colour]
+                    newShape = {
+                        sides: sides, 
+                        colour: colour
+                    }
 
                     // Check for duplicates
                     let valid = true;
                     for (let i = 0; i < shapeList.length; i++) {
-                        if (isEqual(shapeList[i], newShape)) {
+                        
+                        if (_.isEqual(_.pick(shapeList[i], ['sides', 'colour']), newShape)) {
                             valid = false;
                             break;
                         }  
@@ -71,19 +76,27 @@ export default function ShapeGame () {
             
             newShape = generateShapeRandoms()
 
+            const tempShape = {
+                x: x*i+70, 
+                y: y, 
+                radius: radius
+            }
+
+            newShape = {...newShape, ...tempShape}
+
             switch (sides) {
                 case 0:
-                    circle(ctx, x, y, 50);
+                    circle(ctx, x, y, radius);
                     ctx.translate(x*2, 0);
                     break;
                 case 1:
-                    regularpolygon(ctx, x, y, 50, 4, true);
+                    regularpolygon(ctx, x, y, radius, 4, true);
                     ctx.translate(x,-y);
                     break;
                 case 2:
                     break;
                 default:
-                    regularpolygon(ctx, x, y, 50, sides);
+                    regularpolygon(ctx, x, y, radius, sides);
                     ctx.translate(x,-y);
                     break;
             }
@@ -94,9 +107,16 @@ export default function ShapeGame () {
             ctx.stroke()
 
             shapeList.push(newShape)
-    }
-        
+        }
 
+        console.log(shapeList)
+
+        canvas.onclick = function (event)
+        {
+            if (event.region) {
+                alert("you clicked " + event.region);
+            }
+        }
     }, []);
 
     return (
