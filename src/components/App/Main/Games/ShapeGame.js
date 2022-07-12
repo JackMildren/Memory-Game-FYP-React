@@ -104,11 +104,23 @@ export default function ShapeGame () {
         }
     }
 
-    function setupRow(canvasRef, shapeList, shapeCount) {
-        const canvas = canvasRef;
-        const ctx = canvas.getContext('2d') 
+    function selectBox(ctx, canvas, mousePos) {
+        const selected = Math.floor(mousePos.x / (canvas.width / 4));
+        setSelectedBox(selected);
+        console.log(selected);
+        console.log(mousePos);
+        console.log(ctx);
 
+        ctx.restore();
+        ctx.beginPath();
+        ctx.rect(0, 0, canvas.width/4, canvas.height);
+        ctx.strokeStyle("orange");
+        ctx.stroke();
+    }
+
+    function setupRow(ctx, canvas, shapeList, shapeCount) {
         const centerY = canvas.height / 2;
+        ctx.save();
 
         ctx.beginPath();
         ctx.rect(0, 0, canvas.width, canvas.height);
@@ -125,26 +137,36 @@ export default function ShapeGame () {
         ctx.translate(offset, 0);
 
         drawShapeList(ctx, x, y, radius, shapeList, shapeCount);
-
-        canvas.addEventListener('click', (e) => {
-            if (canvas.id === "questionCanvas") {
-                return;
-            }
-            const mousePos = {
-                x: e.clientX - canvas.offsetLeft,
-                y: e.clientY - canvas.offsetTop,
-            };
-
-            const selected = Math.floor(mousePos.x / (canvas.width / 4))
-            setSelectedBox(selected)
-            console.log(selected)
-            console.log(mousePos)
-        });
     }
 
     useEffect(() => {
-        setupRow(questionCanvasRef.current, topShapes, questionShapeCount);
-        setupRow(answerCanvasRef.current, bottomShapes, answerCount);
+        const questionCanvas = questionCanvasRef.current;
+        const qctx = questionCanvas.getContext('2d');
+
+        const answerCanvas = answerCanvasRef.current;
+        const actx = answerCanvas.getContext('2d');
+
+        setupRow(qctx, questionCanvas, topShapes, questionShapeCount);
+        setupRow(actx, answerCanvas, bottomShapes, answerCount);
+
+        answerCanvas.addEventListener('click', (e) => {
+            const mousePos = {
+                x: e.clientX - answerCanvas.offsetLeft,
+                y: e.clientY - answerCanvas.offsetTop,
+            };
+
+            const selected = Math.floor(mousePos.x / (answerCanvas.width / 4));
+            setSelectedBox(selected);
+            console.log(selected);
+            console.log(mousePos);
+            console.log(actx);
+
+            actx.restore();
+            actx.beginPath();
+            actx.rect(0, 0, answerCanvas.width/4, answerCanvas.height);
+            actx.strokeStyle("orange");
+            actx.stroke();
+        });
     }, []);
 
     return (
