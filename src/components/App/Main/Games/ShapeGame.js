@@ -3,7 +3,7 @@ import _ from "lodash";
 
 export default function ShapeGame () {
 
-    const canvasRef = useRef(null)
+    const questionCanvasRef = useRef(null)
 
     const regularpolygon = (ctx, x, y, radius, sides, isDiamond = false) => {
         if (sides < 3) return;
@@ -27,21 +27,30 @@ export default function ShapeGame () {
     }
 
     useEffect(() => {
-        const canvas = canvasRef.current;
-        const ctx = canvas.getContext('2d') 
-        
         const colours = ["blue", "red", "yellow", "green", "orange", "purple"]
-
+        const shapeCount = 5;
         let shapeList = [];
 
-        for (let i = 0; i < 5; i++) {
-            const x = 70
-            const y = 70
-            const radius = 50
-            let sides;
-            let colour;
-            let newShape
+        const canvas = questionCanvasRef.current;
+        const ctx = canvas.getContext('2d') 
 
+        ctx.beginPath();
+        ctx.rect(0, 0, canvas.width, canvas.height);
+        ctx.stroke();
+
+        const scale = Math.min((canvas.width / 800), 2.4);
+        ctx.scale(scale, scale);
+
+        const x = 80
+        const y = 80
+        const radius = 50
+        const offset = 160 - ((shapeCount - 3) * x)
+        ctx.translate(offset, 0)
+        let sides;
+        let colour;
+        let newShape
+
+        for (let i = 0; i < shapeCount; i++) {
             function generateShapeRandoms() {
                 while (true) {
                     sides = Math.floor(Math.random() * 7)
@@ -77,7 +86,7 @@ export default function ShapeGame () {
             newShape = generateShapeRandoms()
 
             const tempShape = {
-                x: x*i+70, 
+                x: x*(i+1), 
                 y: y, 
                 radius: radius
             }
@@ -117,12 +126,20 @@ export default function ShapeGame () {
                 alert("you clicked " + event.region);
             }
         }
+
+        canvas.addEventListener('click', (e) => {
+            const mousePos = {
+                x: e.clientX - canvas.offsetLeft,
+                y: e.clientY - canvas.offsetTop,
+            };
+            console.log(mousePos)
+        })
     }, []);
 
     return (
         <div className="ShapeGame">
-            <canvas ref={canvasRef} width={window.innerWidth} height={window.innerHeight}
-            />
+            <canvas ref={questionCanvasRef} width={window.innerWidth - 16} height={window.innerHeight * 0.7}/>
+            {/* <canvas ref={answerCanvasRef} width={window.innerWidth} height={window.innerHeight}/> */}
         </div>
     )
 }
