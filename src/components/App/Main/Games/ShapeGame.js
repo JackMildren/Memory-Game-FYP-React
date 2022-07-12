@@ -3,7 +3,11 @@ import _ from "lodash";
 
 export default function ShapeGame () {
 
-    const questionCanvasRef = useRef(null)
+    const questionCanvasRef = useRef(null);
+    const answerCanvasRef = useRef(null);
+
+    const colours = ["blue", "red", "yellow", "green", "orange", "purple"]
+    const shapeCount = 5;
 
     const regularpolygon = (ctx, x, y, radius, sides, isDiamond = false) => {
         if (sides < 3) return;
@@ -27,8 +31,6 @@ export default function ShapeGame () {
     }
 
     useEffect(() => {
-        const colours = ["blue", "red", "yellow", "green", "orange", "purple"]
-        const shapeCount = 5;
         let shapeList = [];
 
         const canvas = questionCanvasRef.current;
@@ -38,21 +40,22 @@ export default function ShapeGame () {
         ctx.rect(0, 0, canvas.width, canvas.height);
         ctx.stroke();
 
+        const y = (canvas.height / 5)
+
         const scale = Math.min((canvas.width / 800), 2.4);
         ctx.scale(scale, scale);
 
         const x = 80
-        const y = 80
         const radius = 50
         
         const offset = 160 - ((shapeCount - 3) * x)
         ctx.translate(offset, 0)
 
-        let sides;
-        let colour;
-        let newShape
-
         for (let i = 0; i < shapeCount; i++) {
+            let sides;
+            let colour;
+            let newShape
+
             function generateShapeRandoms() {
                 while (true) {
                     sides = Math.floor(Math.random() * 7)
@@ -140,8 +143,8 @@ export default function ShapeGame () {
 
     return (
         <div className="ShapeGame">
-            <canvas ref={questionCanvasRef} width={window.innerWidth - 16} height={window.innerHeight * 0.7}/>
-            {/* <canvas ref={answerCanvasRef} width={window.innerWidth} height={window.innerHeight}/> */}
+            <canvas ref={questionCanvasRef} width={window.innerWidth - 16} height={window.innerHeight * 0.35}/>
+            <canvas ref={answerCanvasRef} width={window.innerWidth - 16} height={window.innerHeight * 0.35}/>
         </div>
     )
 }
