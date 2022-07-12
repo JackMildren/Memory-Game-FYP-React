@@ -44,8 +44,10 @@ export default function ShapeGame () {
         const x = 80
         const y = 80
         const radius = 50
+        
         const offset = 160 - ((shapeCount - 3) * x)
         ctx.translate(offset, 0)
+
         let sides;
         let colour;
         let newShape
