@@ -7,10 +7,13 @@ export default function ShapeGame () {
     const answerCanvasRef = useRef(null);
 
     const colours = ["blue", "red", "yellow", "green", "orange", "purple"]
-    const shapeCount = 5;
+    const questionShapeCount = 5;
+    const answerCount = 4;
 
     const topShapes = [];
     const bottomShapes = [];
+
+    const [selectedBox, setSelectedBox] = useState(5);
 
     const regularpolygon = (ctx, x, y, radius, sides, isDiamond = false) => {
         if (sides < 3) return;
@@ -63,7 +66,7 @@ export default function ShapeGame () {
         return newShape
     }
 
-    function drawShapeList (ctx, x, y, radius) {
+    function drawShapeList (ctx, x, y, radius, shapeList, shapeCount) {
         for (let i = 0; i < shapeCount; i++) {            
             let newShape = generateRandomShape(topShapes)
 
@@ -97,12 +100,12 @@ export default function ShapeGame () {
             ctx.stokeStyle = "black"
             ctx.stroke()
 
-            topShapes.push(newShape)
+            shapeList.push(newShape)
         }
     }
 
-    useEffect(() => {
-        const canvas = questionCanvasRef.current;
+    function setupRow(canvasRef, shapeList, shapeCount) {
+        const canvas = canvasRef;
         const ctx = canvas.getContext('2d') 
 
         const centerY = canvas.height / 2;
@@ -111,32 +114,43 @@ export default function ShapeGame () {
         ctx.rect(0, 0, canvas.width, canvas.height);
         ctx.stroke();
 
-        const y = centerY
+        const y = centerY/2;
+        const x = 80;
+        const radius = 50;
 
         const scale = Math.min((canvas.width / 800), 2.4);
         ctx.scale(scale, scale);
-
-        const x = 80
-        const radius = 50
         
-        const offset = 160 - ((shapeCount - 3) * x)
-        ctx.translate(offset, 0)
+        const offset = 160 - ((shapeCount - 3) * x);
+        ctx.translate(offset, 0);
 
-        drawShapeList(ctx, x, y, radius);
+        drawShapeList(ctx, x, y, radius, shapeList, shapeCount);
 
         canvas.addEventListener('click', (e) => {
+            if (canvas.id === "questionCanvas") {
+                return;
+            }
             const mousePos = {
                 x: e.clientX - canvas.offsetLeft,
                 y: e.clientY - canvas.offsetTop,
             };
+
+            const selected = Math.floor(mousePos.x / (canvas.width / 4))
+            setSelectedBox(selected)
+            console.log(selected)
             console.log(mousePos)
-        })
+        });
+    }
+
+    useEffect(() => {
+        setupRow(questionCanvasRef.current, topShapes, questionShapeCount);
+        setupRow(answerCanvasRef.current, bottomShapes, answerCount);
     }, []);
 
     return (
         <div className="ShapeGame">
-            <canvas ref={questionCanvasRef} width={window.innerWidth - 16} height={window.innerHeight * 0.35}/>
-            <canvas ref={answerCanvasRef} width={window.innerWidth - 16} height={window.innerHeight * 0.35}/>
+            <canvas id="questionCanvas" ref={questionCanvasRef} width={window.innerWidth - 16} height={window.innerHeight * 0.35}/>
+            <canvas id="answerCanvas" ref={answerCanvasRef} width={window.innerWidth - 16} height={window.innerHeight * 0.35}/>
         </div>
     )
 }
