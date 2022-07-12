@@ -9,6 +9,9 @@ export default function ShapeGame () {
     const colours = ["blue", "red", "yellow", "green", "orange", "purple"]
     const shapeCount = 5;
 
+    const topShapes = [];
+    const bottomShapes = [];
+
     const regularpolygon = (ctx, x, y, radius, sides, isDiamond = false) => {
         if (sides < 3) return;
         ctx.beginPath();
@@ -30,65 +33,39 @@ export default function ShapeGame () {
         ctx.closePath();
     }
 
-    useEffect(() => {
-        let shapeList = [];
+    function generateRandomShape(topShapes) {
+        let newShape = {}
+        while (true) {
+            const sides = Math.floor(Math.random() * 7)
+            const colour = colours[Math.floor(Math.random() * colours.length)]
 
-        const canvas = questionCanvasRef.current;
-        const ctx = canvas.getContext('2d') 
-
-        ctx.beginPath();
-        ctx.rect(0, 0, canvas.width, canvas.height);
-        ctx.stroke();
-
-        const y = (canvas.height / 5)
-
-        const scale = Math.min((canvas.width / 800), 2.4);
-        ctx.scale(scale, scale);
-
-        const x = 80
-        const radius = 50
-        
-        const offset = 160 - ((shapeCount - 3) * x)
-        ctx.translate(offset, 0)
-
-        for (let i = 0; i < shapeCount; i++) {
-            let sides;
-            let colour;
-            let newShape
-
-            function generateShapeRandoms() {
-                while (true) {
-                    sides = Math.floor(Math.random() * 7)
-
-                    colour = colours[Math.floor(Math.random() * colours.length)]
-
-                    newShape = {
-                        sides: sides, 
-                        colour: colour
-                    }
-
-                    // Check for duplicates
-                    let valid = true;
-                    for (let i = 0; i < shapeList.length; i++) {
-                        
-                        if (_.isEqual(_.pick(shapeList[i], ['sides', 'colour']), newShape)) {
-                            valid = false;
-                            break;
-                        }  
-                    }
-
-                    sides === 2 && (valid = false);
-
-                    if (valid) {
-                        break;
-                    } else {
-                        continue;
-                    }
-                }
-                return newShape
+            newShape = {
+                sides: sides, 
+                colour: colour
             }
-            
-            newShape = generateShapeRandoms()
+
+            // Check for duplicates
+            let valid = true;
+            for (let i = 0; i < topShapes.length; i++) {
+                if (_.isEqual(_.pick(topShapes[i], ['sides', 'colour']), newShape)) {
+                    valid = false;
+                    break;
+                }  
+            }
+
+            sides === 2 && (valid = false);
+            if (valid) {
+                break;
+            } else {
+                continue;
+            }
+        }
+        return newShape
+    }
+
+    function drawShapeList (ctx, x, y, radius) {
+        for (let i = 0; i < shapeCount; i++) {            
+            let newShape = generateRandomShape(topShapes)
 
             const tempShape = {
                 x: x*(i+1), 
@@ -98,7 +75,7 @@ export default function ShapeGame () {
 
             newShape = {...newShape, ...tempShape}
 
-            switch (sides) {
+            switch (newShape.sides) {
                 case 0:
                     circle(ctx, x, y, radius);
                     ctx.translate(x*2, 0);
@@ -110,27 +87,42 @@ export default function ShapeGame () {
                 case 2:
                     break;
                 default:
-                    regularpolygon(ctx, x, y, radius, sides);
+                    regularpolygon(ctx, x, y, radius, newShape.sides);
                     ctx.translate(x,-y);
                     break;
             }
 
-            ctx.fillStyle = colour;
+            ctx.fillStyle = newShape.colour;
             ctx.fill();
             ctx.stokeStyle = "black"
             ctx.stroke()
 
-            shapeList.push(newShape)
+            topShapes.push(newShape)
         }
+    }
 
-        console.log(shapeList)
+    useEffect(() => {
+        const canvas = questionCanvasRef.current;
+        const ctx = canvas.getContext('2d') 
 
-        canvas.onclick = function (event)
-        {
-            if (event.region) {
-                alert("you clicked " + event.region);
-            }
-        }
+        const centerY = canvas.height / 2;
+
+        ctx.beginPath();
+        ctx.rect(0, 0, canvas.width, canvas.height);
+        ctx.stroke();
+
+        const y = centerY
+
+        const scale = Math.min((canvas.width / 800), 2.4);
+        ctx.scale(scale, scale);
+
+        const x = 80
+        const radius = 50
+        
+        const offset = 160 - ((shapeCount - 3) * x)
+        ctx.translate(offset, 0)
+
+        drawShapeList(ctx, x, y, radius);
 
         canvas.addEventListener('click', (e) => {
             const mousePos = {
