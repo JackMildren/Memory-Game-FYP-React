@@ -1,6 +1,6 @@
 import { Stage, Layer, RegularPolygon } from "react-konva";
 import { useState, useRef, useEffect } from "react";
-import { isCompositeComponent } from "react-dom/test-utils";
+import _ from 'lodash';
 
 export default function ShapeGame() {
     let stageRef = useRef(null);
@@ -25,6 +25,30 @@ export default function ShapeGame() {
         }
     }, [selectedShape]);
 
+    function getSidesColour(shapeArray) {
+        let newArr = [];
+        while (true) {
+            const sides = Math.ceil(Math.random() * 3 + 3);
+            const colour = colourList[Math.floor(Math.random() * colourList.length)];
+            newArr = [sides, colour]
+
+            let valid = true;
+            for (let i=0; i<shapeArray.length; i++) {
+                if (_.isEqual([shapeArray[i].sides, shapeArray[i].color], newArr)) {
+                    valid = false;
+                    break;
+                }
+            }
+
+            if (valid) {
+                break;
+            } else {
+                continue;
+            }
+        }
+        return newArr
+    }
+
     function generateShapes(questionLayer) {
         const heightAdjust = (questionLayer ? 0.25 : 0.75);
         const shapeCount = (questionLayer ? questionShapeCount : answerShapeCount);
@@ -33,16 +57,26 @@ export default function ShapeGame() {
         const width = stageRef.attrs.width - border;
         const height = stageRef.attrs.height;
 
-        return [...Array(shapeCount)].map((_, i) => ({
-            id: i.toString(),
-            x: Math.floor(width / (shapeCount - 1) * i) + (border / 2),
-            y: Math.floor(height * heightAdjust),
-            sides: Math.ceil(Math.random() * 3 + 3),
-            color: colourList[Math.floor(Math.random() * colourList.length)],
-            radius: Math.min(80, width),
-            strokeWidth: (!questionLayer && (selectedShape === i)) ? 5 : 1,
-            stroke: (!questionLayer && (selectedShape === i)) ? "yellow" : "black",
-        }));
+        const newShapeArray = [];
+        for (let i=0; i<shapeCount; i++) {
+            const tempArr = getSidesColour(newShapeArray);
+            const sides = tempArr[0];
+            const colour = tempArr[1];
+
+            const newShape = {
+                id: i.toString(),
+                x: Math.floor(width / (shapeCount - 1) * i) + (border / 2),
+                y: Math.floor(height * heightAdjust),
+                sides: sides,
+                color: colour,
+                radius: Math.min(80, width),
+                strokeWidth: (!questionLayer && (selectedShape === i)) ? 5 : 1,
+                stroke: (!questionLayer && (selectedShape === i)) ? "yellow" : "black",
+            }
+
+            newShapeArray.push(newShape);
+        }
+        return newShapeArray;
     }
 
     function selectShape(shapeNo) {
