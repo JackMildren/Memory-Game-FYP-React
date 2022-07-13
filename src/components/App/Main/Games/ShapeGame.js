@@ -49,6 +49,8 @@ export default function ShapeGame() {
         setAShapes(null);
         setSelectedShape(answerShapeCount + 1);
         setShapeHidden(questionShapeCount + 1);
+        setCorrectBox(questionShapeCount + 1);
+        setCorrectShape(null);
         setQuestionMark(null);
         setConfirmBoxText("READY");
 
@@ -72,6 +74,12 @@ export default function ShapeGame() {
                 if (_.isEqual([shapeArray[i].sides, shapeArray[i].color], newArr)) {
                     valid = false;
                     break;
+                }
+            }
+
+            if (correctShape) {
+                if (_.isEqual([correctShape.sides, correctShape.color], newArr)) {
+                    valid = false;
                 }
             }
 
