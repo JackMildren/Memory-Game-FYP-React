@@ -1,4 +1,4 @@
-import { Stage, Layer, RegularPolygon } from "react-konva";
+import { Stage, Layer, RegularPolygon, Text } from "react-konva";
 import { useState, useRef, useEffect } from "react";
 import _ from 'lodash';
 
@@ -7,8 +7,8 @@ export default function ShapeGame() {
     let questionLayerRef = useRef(null);
     let answerLayerRef = useRef(null);
 
-    const colourList = ['hotpink', 'blue', 'green', 'yellow', 'orange', 'purple'];
-    const questionShapeCount = 5;
+    const colorList = ['hotpink', 'blue', 'green', 'yellow', 'orange', 'purple'];
+    const questionShapeCount = 3;
     const answerShapeCount = 4;
     
     const [qShapes, setQShapes] = useState(null);
@@ -16,7 +16,11 @@ export default function ShapeGame() {
     
     const [selectedShape, setSelectedShape] = useState(answerShapeCount + 1);
     const [shapeHidden, setShapeHidden] = useState(questionShapeCount + 1);
+    const [questionMark, setQuestionMark] = useState(null);
     const [confirmBoxText, setConfirmBoxText] = useState("READY");
+
+    const [correctBox, setCorrectBox] = useState(questionShapeCount + 1);
+    const [correctShape, setCorrectShape] = useState(null);
 
     useEffect(() => {
         // eslint-disable-next-line
@@ -34,8 +38,8 @@ export default function ShapeGame() {
         let newArr = [];
         while (true) {
             const sides = Math.ceil(Math.random() * 3 + 3);
-            const colour = colourList[Math.floor(Math.random() * colourList.length)];
-            newArr = [sides, colour]
+            const color = colorList[Math.floor(Math.random() * colorList.length)];
+            newArr = [sides, color]
 
             let valid = true;
             for (let i=0; i<shapeArray.length; i++) {
@@ -54,9 +58,27 @@ export default function ShapeGame() {
         return newArr
     }
 
+    function getRotation(sides) {
+        switch (sides) {
+            case 4:
+                return 45;
+            case 6:
+                return 30;
+            default:
+                return 0;
+        }
+    }
+
     function generateShapes(questionLayer) {
         const heightAdjust = (questionLayer ? 0.25 : 0.75);
         const shapeCount = (questionLayer ? questionShapeCount : answerShapeCount);
+        
+        let newCorrectAnswer;
+        if (!questionLayer) {
+            newCorrectAnswer = Math.floor(Math.random() * answerShapeCount)
+            setCorrectBox(newCorrectAnswer)
+            console.log(correctShape)
+        }
 
         const border = stageRef.attrs.width * 0.3;
         const width = stageRef.attrs.width - border;
@@ -64,21 +86,36 @@ export default function ShapeGame() {
 
         const newShapeArray = [];
         for (let i=0; i<shapeCount; i++) {
-            const tempArr = getSidesColour(newShapeArray);
-            const sides = tempArr[0];
-            const colour = tempArr[1];
+            let newShape;
+            if (i === newCorrectAnswer) {
+                newShape = {
+                    id: i.toString(),
+                    x: Math.floor(width / (shapeCount - 1) * i) + (border / 2),
+                    y: Math.floor(height * heightAdjust),
+                    sides: correctShape.sides,
+                    color: correctShape.color,
+                    radius: Math.min(80, width),
+                    strokeWidth: (!questionLayer && (selectedShape === i)) ? 5 : 1,
+                    stroke: (!questionLayer && (selectedShape === i)) ? "yellow" : "black",
+                    rotation: getRotation(correctShape.sides),
+                }
+            } else {
+                const tempArr = getSidesColour(newShapeArray);
+                const sides = tempArr[0];
+                const color = tempArr[1];
 
-            const newShape = {
-                id: i.toString(),
-                x: Math.floor(width / (shapeCount - 1) * i) + (border / 2),
-                y: Math.floor(height * heightAdjust),
-                sides: sides,
-                color: colour,
-                radius: Math.min(80, width),
-                strokeWidth: (!questionLayer && (selectedShape === i)) ? 5 : 1,
-                stroke: (!questionLayer && (selectedShape === i)) ? "yellow" : "black",
+                newShape = {
+                    id: i.toString(),
+                    x: Math.floor(width / (shapeCount - 1) * i) + (border / 2),
+                    y: Math.floor(height * heightAdjust),
+                    sides: sides,
+                    color: color,
+                    radius: Math.min(80, width),
+                    strokeWidth: (!questionLayer && (selectedShape === i)) ? 5 : 1,
+                    stroke: (!questionLayer && (selectedShape === i)) ? "yellow" : "black",
+                    rotation: getRotation(sides),
+                }
             }
-
             newShapeArray.push(newShape);
         }
         return newShapeArray;
@@ -101,10 +138,34 @@ export default function ShapeGame() {
 
         const tempShapes = [...qShapes];
         for (let i=0; i < tempShapes.length; i++) {
-            (shapeToHide === i) && (tempShapes[i].color = "white");
-            tempShapes[i].stroke = (shapeToHide === i) ? "white" : "black";
+            if (shapeToHide === i) {
+                setCorrectShape({...tempShapes[i]})
+
+                tempShapes[i].color = "white"
+                tempShapes[i].stroke = "white"
+
+                const newQuestionMark = {
+                    x: tempShapes[i].x,
+                    y: tempShapes[i].y,
+                    fontSize: Math.min(1000, Math.floor(stageRef.current.attrs.width/10))
+                }
+                newQuestionMark.x -= newQuestionMark.fontSize*0.33
+                newQuestionMark.y -= newQuestionMark.fontSize*0.5
+                setQuestionMark(newQuestionMark)
+            }
         }
         return tempShapes;
+    }
+
+    function checkCorrectAnswer() {
+        const tempShapes = [...aShapes]
+        if (selectedShape === correctBox) {
+            tempShapes[selectedShape].stroke = "limeGreen";
+        } else {
+            tempShapes[selectedShape].stroke = "red";
+        }
+        setAShapes(tempShapes);
+        setConfirmBoxText("NEXT QUESTION");
     }
 
     function handleShapeSelect(shape) {
@@ -118,7 +179,7 @@ export default function ShapeGame() {
         }
         if (selectedShape < answerShapeCount) {
             // Check answer
-            console.log("checking answer")
+            checkCorrectAnswer()
         }
     }
 
@@ -137,6 +198,7 @@ export default function ShapeGame() {
                     radius={shape.radius}
                     strokeWidth={shape.strokeWidth}
                     stroke={shape.stroke}
+                    rotation={shape.rotation}
                 />
                 ))}
             </Layer>
@@ -152,9 +214,19 @@ export default function ShapeGame() {
                     radius={shape.radius}
                     strokeWidth={shape.strokeWidth}
                     stroke={shape.stroke}
+                    rotation={shape.rotation}
                     onClick={() => {handleShapeSelect(shape)}}
                 />
                 ))}
+                {questionMark && 
+                <Text 
+                    x={questionMark.x}
+                    y={questionMark.y}
+                    text="?"
+                    fontStyle="bold"
+                    fontSize={questionMark.fontSize}
+                />
+                }
             </Layer>
         </Stage>
         
