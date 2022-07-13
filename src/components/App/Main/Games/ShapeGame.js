@@ -12,7 +12,10 @@ export default function ShapeGame() {
     const answerShapeCount = 4;
     const TOTAL_QUESTIONS = 10;
     
-    const [questionNo, setQuestionNo] = useState(TOTAL_QUESTIONS)
+    const [gameState, setGameState] = useState("start");
+    const [questionNo, setQuestionNo] = useState(0);
+    const [score, setScore] = useState(0);
+    const [highScore, setHighScore] = useState(0);
 
     const [qShapes, setQShapes] = useState(null);
     const [aShapes, setAShapes] = useState(null);  
@@ -28,16 +31,34 @@ export default function ShapeGame() {
     const [correctShape, setCorrectShape] = useState(null);
 
     useEffect(() => {
-        // eslint-disable-next-line
-        stageRef = stageRef.current
+        if (stageRef.current) {
+            // eslint-disable-next-line
+            stageRef = stageRef.current
 
-        if (!qShapes) {
-            setQShapes(generateShapes(true))
+            if (!qShapes) {
+                setQShapes(generateShapes(true))
+            }
+            if (!aShapes && shapeHidden < questionShapeCount) {
+                setAShapes(generateShapes(false))
+            }
         }
-        if (!aShapes && shapeHidden < questionShapeCount) {
-            setAShapes(generateShapes(false))
+    }, [selectedShape, shapeHidden, gameState]);
+
+    function gameLoop() {
+        setQShapes(null);
+        setAShapes(null);
+        setSelectedShape(answerShapeCount + 1);
+        setShapeHidden(questionShapeCount + 1);
+        setQuestionMark(null);
+        setConfirmBoxText("READY");
+
+        if (questionNo < TOTAL_QUESTIONS) {
+            setQuestionNo(questionNo + 1)
+        } else {
+            (score > highScore) && setHighScore(score);
+            loadEndScreen();
         }
-    }, [selectedShape, shapeHidden]);
+    }
 
     function getSidesColour(shapeArray) {
         let newArr = [];
@@ -82,7 +103,6 @@ export default function ShapeGame() {
         if (!questionLayer) {
             newCorrectAnswer = Math.floor(Math.random() * answerShapeCount)
             setCorrectBox(newCorrectAnswer)
-            console.log(correctShape)
         }
 
         const borderMul = (questionLayer ? 0.3 : 0.5);
@@ -167,11 +187,29 @@ export default function ShapeGame() {
         const tempShapes = [...aShapes]
         if (selectedShape === correctBox) {
             tempShapes[selectedShape].stroke = "limeGreen";
+            setScore(score + 1)
         } else {
             tempShapes[selectedShape].stroke = "red";
         }
         setAShapes(tempShapes);
         setConfirmBoxText("NEXT QUESTION");
+    }
+
+    function startGame() {
+        setGameState("running")
+        setScore(0);
+        gameLoop();
+    }
+
+    function loadEndScreen() {
+        setGameState("end")
+        setQuestionNo(0);
+    }
+
+    function restartGame() {
+        setGameState("start")
+        setScore(0);
+        gameLoop();
     }
 
     function handleShapeSelect(shape) {
@@ -187,64 +225,105 @@ export default function ShapeGame() {
             // Check answer
             checkCorrectAnswer()
         }
+        if (confirmBoxText === "NEXT QUESTION") {
+            gameLoop()
+        }
     }
 
     return (
     <div className="ShapeGame">
-        <section className="questionNumber">
-            <p id="questionNo">Question {questionNo}</p>
-        </section>
+        { gameState === "start" &&
+          <main className="gameBox" id="startScreen">
+            <section>
+              <p>MEMORY!</p>
+            </section>
 
-        <Stage ref={stageRef} width={window.innerWidth - 16} height={window.innerHeight * 0.57}>
-            <Layer ref={questionLayerRef}>
-                {qShapes && qShapes.map((shape) => (
-                <RegularPolygon
-                    key={shape.id}
-                    id={shape.id}
-                    x={shape.x}
-                    y={shape.y}
-                    sides={shape.sides}
-                    fill={shape.color}
-                    radius={shape.radius}
-                    strokeWidth={shape.strokeWidth}
-                    stroke={shape.stroke}
-                    rotation={shape.rotation}
-                />
-                ))}
-            </Layer>
-            <Layer ref={answerLayerRef}>
-                {aShapes && aShapes.map((shape) => (
-                <RegularPolygon
-                    key={shape.id}
-                    id={shape.id}
-                    x={shape.x}
-                    y={shape.y}
-                    sides={shape.sides}
-                    fill={shape.color}
-                    radius={shape.radius}
-                    strokeWidth={shape.strokeWidth}
-                    stroke={shape.stroke}
-                    rotation={shape.rotation}
-                    onClick={() => {handleShapeSelect(shape)}}
-                />
-                ))}
-                {questionMark && 
-                <Text 
-                    x={questionMark.x}
-                    y={questionMark.y}
-                    text="?"
-                    fontStyle="bold"
-                    fontSize={questionMark.fontSize}
-                />
-                }
-            </Layer>
-        </Stage>
-        
-        <section className="confirmButton">
-            { ((shapeHidden > questionShapeCount) || (selectedShape < answerShapeCount)) &&
-                <button id="confirmBox" onClick={() => {handleConfirmBoxClick()}}>{confirmBoxText}</button>
-            }
-        </section>
+            <section>
+              <p id="highScore">HIGH SCORE: {highScore}</p>
+            </section>
+
+            <section>
+              <button onClick={startGame}>START GAME</button>
+            </section>
+          </main>
+        }
+
+        { gameState === "running" &&
+            <main>
+                <section className="questionNumber">
+                    <p id="questionNo">Question {questionNo}</p>
+                </section>
+
+                <Stage ref={stageRef} width={window.innerWidth - 16} height={window.innerHeight * 0.57}>
+                    <Layer ref={questionLayerRef}>
+                        {qShapes && qShapes.map((shape) => (
+                        <RegularPolygon
+                            key={shape.id}
+                            id={shape.id}
+                            x={shape.x}
+                            y={shape.y}
+                            sides={shape.sides}
+                            fill={shape.color}
+                            radius={shape.radius}
+                            strokeWidth={shape.strokeWidth}
+                            stroke={shape.stroke}
+                            rotation={shape.rotation}
+                        />
+                        ))}
+                    </Layer>
+                    <Layer ref={answerLayerRef}>
+                        {aShapes && aShapes.map((shape) => (
+                        <RegularPolygon
+                            key={shape.id}
+                            id={shape.id}
+                            x={shape.x}
+                            y={shape.y}
+                            sides={shape.sides}
+                            fill={shape.color}
+                            radius={shape.radius}
+                            strokeWidth={shape.strokeWidth}
+                            stroke={shape.stroke}
+                            rotation={shape.rotation}
+                            onClick={() => {handleShapeSelect(shape)}}
+                        />
+                        ))}
+                        {questionMark && 
+                        <Text 
+                            x={questionMark.x}
+                            y={questionMark.y}
+                            text="?"
+                            fontStyle="bold"
+                            fontSize={questionMark.fontSize}
+                        />
+                        }
+                    </Layer>
+                </Stage>
+                
+                <section className="confirmButton">
+                    { ((shapeHidden > questionShapeCount) || (selectedShape < answerShapeCount)) &&
+                        <button id="confirmBox" onClick={() => {handleConfirmBoxClick()}}>{confirmBoxText}</button>
+                    }
+                </section>
+            </main>
+        }
+        { gameState === "end" &&
+          <main className="gameBox" id="endScreen">
+            <section>
+              <p>GAME OVER</p>
+            </section>
+
+            <section>
+              <p id="score">SCORE: {score}</p>
+            </section>
+
+            <section>
+              <button onClick={() => {
+                restartGame()
+              }}>TRY AGAIN?
+              </button>
+            </section>
+          </main>
+        }
     </div>
     );
 }

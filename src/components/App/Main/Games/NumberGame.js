@@ -25,9 +25,6 @@ export default function NumberGame() {
 
   const TOTAL_QUESTIONS = 10;
 
-  useEffect(() => {
-  }, [answerRevealed]);
-
   function gameLoop() {
     if (questionNo < TOTAL_QUESTIONS) {
       getQuestion()
@@ -203,7 +200,7 @@ export default function NumberGame() {
   return (
     <div className="Game">
       <main className="gameContainer">
-        {gameState === "start" &&
+        { gameState === "start" &&
           <main className="gameBox" id="startScreen">
             <section>
               <p>MATHS!</p>
@@ -219,9 +216,9 @@ export default function NumberGame() {
           </main>
         }
 
-        {gameState === "running" &&
+        { gameState === "running" &&
           <main className="gameBox" id="runningGame">
-            <section className="questionNumber">
+            <section>
               <p id="questionNo">Question {questionNo}</p>
             </section>
 
@@ -242,14 +239,14 @@ export default function NumberGame() {
           </main>
         }
 
-        {gameState === "end" &&
+        { gameState === "end" &&
           <main className="gameBox" id="endScreen">
             <section>
               <p>GAME OVER</p>
             </section>
 
             <section>
-              <p id="score">{score}</p>
+              <p id="score">SCORE: {score}</p>
             </section>
 
             <section>
