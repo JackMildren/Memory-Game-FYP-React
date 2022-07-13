@@ -236,7 +236,7 @@ export default function NumberGame() {
               <button className="answerBox" style={{backgroundColor: boxList[3].color}} onClick={selectAnswerFour}>{boxList[3].answer}</button>
             </section>
 
-            <section>
+            <section className="confirmButton">
               <button id="confirmBox" onClick={confirmBoxSelect}>{confirmBoxText}</button>
             </section>
           </main>

@@ -15,15 +15,20 @@ export default function ShapeGame() {
     const [aShapes, setAShapes] = useState(null);  
     
     const [selectedShape, setSelectedShape] = useState(answerShapeCount + 1);
+    const [shapeHidden, setShapeHidden] = useState(questionShapeCount + 1);
+    const [confirmBoxText, setConfirmBoxText] = useState("READY");
 
     useEffect(() => {
+        // eslint-disable-next-line
         stageRef = stageRef.current
 
         if (!qShapes) {
             setQShapes(generateShapes(true))
+        }
+        if (!aShapes && shapeHidden < questionShapeCount) {
             setAShapes(generateShapes(false))
         }
-    }, [selectedShape]);
+    }, [selectedShape, shapeHidden]);
 
     function getSidesColour(shapeArray) {
         let newArr = [];
@@ -80,7 +85,8 @@ export default function ShapeGame() {
     }
 
     function selectShape(shapeNo) {
-        setSelectedShape(shapeNo);
+        setSelectedShape(parseInt(shapeNo));
+        setConfirmBoxText("CONFIRM")
 
         const tempShapes = [...aShapes];
         for (let i=0; i < tempShapes.length; i++) {
@@ -89,13 +95,36 @@ export default function ShapeGame() {
         return tempShapes;
     }
 
-    function handleClick(shape) {
+    function hideShape() {
+        const shapeToHide = Math.floor(Math.random() * questionShapeCount);
+        setShapeHidden(shapeToHide);
+
+        const tempShapes = [...qShapes];
+        for (let i=0; i < tempShapes.length; i++) {
+            (shapeToHide === i) && (tempShapes[i].color = "white");
+            tempShapes[i].stroke = (shapeToHide === i) ? "white" : "black";
+        }
+        return tempShapes;
+    }
+
+    function handleShapeSelect(shape) {
         setAShapes(selectShape(shape.id))
+    }
+
+    function handleConfirmBoxClick() {
+        if (shapeHidden > questionShapeCount) {
+            // Hide box
+            setQShapes(hideShape())
+        }
+        if (selectedShape < answerShapeCount) {
+            // Check answer
+            console.log("checking answer")
+        }
     }
 
     return (
     <div className="ShapeGame">
-        <Stage ref={stageRef} width={window.innerWidth - 16} height={window.innerHeight * 0.75}>
+        <Stage ref={stageRef} width={window.innerWidth - 16} height={window.innerHeight * 0.63}>
             <Layer ref={questionLayerRef}>
                 {qShapes && qShapes.map((shape) => (
                 <RegularPolygon
@@ -123,11 +152,17 @@ export default function ShapeGame() {
                     radius={shape.radius}
                     strokeWidth={shape.strokeWidth}
                     stroke={shape.stroke}
-                    onClick={() => {handleClick(shape)}}
+                    onClick={() => {handleShapeSelect(shape)}}
                 />
                 ))}
             </Layer>
         </Stage>
+        
+        <div className="confirmButton">
+            { ((shapeHidden > questionShapeCount) || (selectedShape < answerShapeCount)) &&
+                <button id="confirmBox" onClick={() => {handleConfirmBoxClick()}}>{confirmBoxText}</button>
+            }
+        </div>
     </div>
     );
 }
