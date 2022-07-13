@@ -10,13 +10,18 @@ export default function ShapeGame() {
     const colorList = ['hotpink', 'blue', 'green', 'yellow', 'orange', 'purple'];
     const questionShapeCount = 3;
     const answerShapeCount = 4;
+    const TOTAL_QUESTIONS = 10;
     
+    const [questionNo, setQuestionNo] = useState(TOTAL_QUESTIONS)
+
     const [qShapes, setQShapes] = useState(null);
     const [aShapes, setAShapes] = useState(null);  
     
     const [selectedShape, setSelectedShape] = useState(answerShapeCount + 1);
+
     const [shapeHidden, setShapeHidden] = useState(questionShapeCount + 1);
     const [questionMark, setQuestionMark] = useState(null);
+
     const [confirmBoxText, setConfirmBoxText] = useState("READY");
 
     const [correctBox, setCorrectBox] = useState(questionShapeCount + 1);
@@ -80,7 +85,8 @@ export default function ShapeGame() {
             console.log(correctShape)
         }
 
-        const border = stageRef.attrs.width * 0.3;
+        const borderMul = (questionLayer ? 0.3 : 0.5);
+        const border = stageRef.attrs.width * borderMul;
         const width = stageRef.attrs.width - border;
         const height = stageRef.attrs.height;
 
@@ -185,7 +191,11 @@ export default function ShapeGame() {
 
     return (
     <div className="ShapeGame">
-        <Stage ref={stageRef} width={window.innerWidth - 16} height={window.innerHeight * 0.63}>
+        <section className="questionNumber">
+            <p id="questionNo">Question {questionNo}</p>
+        </section>
+
+        <Stage ref={stageRef} width={window.innerWidth - 16} height={window.innerHeight * 0.57}>
             <Layer ref={questionLayerRef}>
                 {qShapes && qShapes.map((shape) => (
                 <RegularPolygon
@@ -230,11 +240,11 @@ export default function ShapeGame() {
             </Layer>
         </Stage>
         
-        <div className="confirmButton">
+        <section className="confirmButton">
             { ((shapeHidden > questionShapeCount) || (selectedShape < answerShapeCount)) &&
                 <button id="confirmBox" onClick={() => {handleConfirmBoxClick()}}>{confirmBoxText}</button>
             }
-        </div>
+        </section>
     </div>
     );
 }

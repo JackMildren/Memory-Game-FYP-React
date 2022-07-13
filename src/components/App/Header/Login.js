@@ -26,8 +26,6 @@ export default function Login() {
             document.getElementById("signInDiv"),
             { theme: "outline", size: "large" }
         )
-
-        google.accounts.id.prompt();
     }, []);
 
     return (

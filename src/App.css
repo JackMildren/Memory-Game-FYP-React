@@ -113,7 +113,6 @@ a:visited {
 .gameBox p, button {
   display: inline-block;
   text-align: center;
-  padding-left: 1000%;
   padding: 2%;
   font-size: 150%;
   border: thin solid black;
@@ -145,6 +144,22 @@ a:visited {
   text-align: center;
 }
 
+.ShapeGame {
+  text-align: center;
+}
+
 .confirmButton {
   text-align: center;
+}
+
+.questionNumber {
+  display: inline-block;
+  text-align: center;
+  padding: 1%;
+  font-size: 150%;
+  margin-top: 16px;
+  border: thin solid black;
+  border-radius: 500px;
+  background-color: lightblue;
+  text-decoration: none;
 }

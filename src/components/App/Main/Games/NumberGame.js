@@ -221,7 +221,7 @@ export default function NumberGame() {
 
         {gameState === "running" &&
           <main className="gameBox" id="runningGame">
-            <section>
+            <section className="questionNumber">
               <p id="questionNo">Question {questionNo}</p>
             </section>
 
