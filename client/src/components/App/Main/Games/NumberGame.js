@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 
 export default function NumberGame() {
   // TODO - Make this a database request
@@ -11,10 +11,10 @@ export default function NumberGame() {
   const [highScore, setHighScore] = useState(0);
 
   const INITIAL_STATE = [
-    {answer: "0", color: "lightblue"},
-    {answer: "0", color: "lightblue"},
-    {answer: "0", color: "lightblue"},
-    {answer: "0", color: "lightblue"},
+    { answer: "0", color: "lightblue" },
+    { answer: "0", color: "lightblue" },
+    { answer: "0", color: "lightblue" },
+    { answer: "0", color: "lightblue" },
   ];
   const [boxList, setBoxList] = useState([...INITIAL_STATE]);
 
@@ -27,9 +27,9 @@ export default function NumberGame() {
 
   function gameLoop() {
     if (questionNo < TOTAL_QUESTIONS) {
-      getQuestion()
+      getQuestion();
     } else {
-      loadEndScreen()
+      loadEndScreen();
     }
   }
 
@@ -40,7 +40,7 @@ export default function NumberGame() {
     let n2 = getRndInteger(1, 10);
     let modifier = getRndInteger(0, DIFFICULTY - 1);
 
-    setCurrentQuestion((n1 + MODIFIER_LIST[modifier] + n2));
+    setCurrentQuestion(n1 + MODIFIER_LIST[modifier] + n2);
 
     function calculateAnswer(x, y) {
       switch (modifier) {
@@ -57,7 +57,7 @@ export default function NumberGame() {
 
     let answer = calculateAnswer(n1, n2);
 
-    let newVal = getRndInteger(0, 3)
+    let newVal = getRndInteger(0, 3);
     setCorrectBox(newVal);
 
     let tempBoxList = [...INITIAL_STATE];
@@ -90,10 +90,10 @@ export default function NumberGame() {
 
     let newColor = "lightblue";
     for (let box = 0; box < boxList.length; box++) {
-      (box === inputNo) ? (newColor = "yellow") : (newColor = "lightblue");
-      newBoxList[box] = {...newBoxList[box], color: newColor}
+      box === inputNo ? (newColor = "yellow") : (newColor = "lightblue");
+      newBoxList[box] = { ...newBoxList[box], color: newColor };
     }
-    
+
     setBoxList(newBoxList);
   }
 
@@ -114,11 +114,11 @@ export default function NumberGame() {
     } else {
       let tempBoxList = resetSelection();
 
-      tempBoxList[correctBox] = updateBox(correctBox, null, "green")
+      tempBoxList[correctBox] = updateBox(correctBox, null, "green");
       if (selectedBox === correctBox) {
         setScore(score + 1);
       } else {
-        tempBoxList[selectedBox] = updateBox(selectedBox, null, "red")
+        tempBoxList[selectedBox] = updateBox(selectedBox, null, "red");
       }
       setBoxList(tempBoxList);
 
@@ -134,17 +134,17 @@ export default function NumberGame() {
   /// Change Game State
 
   function startGame() {
-    setGameState("running")
+    setGameState("running");
     gameLoop();
   }
 
   function loadEndScreen() {
-    setGameState("end")
+    setGameState("end");
     setQuestionNo(1);
   }
 
   function restartGame() {
-    setGameState("start")
+    setGameState("start");
 
     if (score > highScore) {
       setHighScore(score);
@@ -167,7 +167,7 @@ export default function NumberGame() {
   }
 
   function updateBox(boxNo, newAnswer = null, newColor = null) {
-    let tempBox = {...boxList[boxNo]};
+    let tempBox = { ...boxList[boxNo] };
 
     if (newAnswer && tempBox.answer !== newAnswer) {
       // console.log("updating box " + boxNo + " answer from " + tempBox.answer + " to " + newAnswer);
@@ -182,25 +182,25 @@ export default function NumberGame() {
   }
 
   function selectAnswerOne() {
-    selectAnswer(0)
+    selectAnswer(0);
   }
 
   function selectAnswerTwo() {
-    selectAnswer(1)
+    selectAnswer(1);
   }
 
   function selectAnswerThree() {
-    selectAnswer(2)
+    selectAnswer(2);
   }
 
   function selectAnswerFour() {
-    selectAnswer(3)
+    selectAnswer(3);
   }
 
   return (
     <div className="Game">
       <main className="gameContainer">
-        { gameState === "start" &&
+        {gameState === "start" && (
           <main className="gameBox" id="startScreen">
             <section>
               <p>MATHS!</p>
@@ -214,9 +214,9 @@ export default function NumberGame() {
               <button onClick={startGame}>START GAME</button>
             </section>
           </main>
-        }
+        )}
 
-        { gameState === "running" &&
+        {gameState === "running" && (
           <main className="gameBox" id="runningGame">
             <section>
               <p id="questionNo">Question {questionNo}</p>
@@ -227,19 +227,45 @@ export default function NumberGame() {
             </section>
 
             <section className="answerSection">
-              <button className="answerBox" style={{backgroundColor: boxList[0].color}} onClick={selectAnswerOne}>{boxList[0].answer}</button>
-              <button className="answerBox" style={{backgroundColor: boxList[1].color}} onClick={selectAnswerTwo}>{boxList[1].answer}</button>
-              <button className="answerBox" style={{backgroundColor: boxList[2].color}} onClick={selectAnswerThree}>{boxList[2].answer}</button>
-              <button className="answerBox" style={{backgroundColor: boxList[3].color}} onClick={selectAnswerFour}>{boxList[3].answer}</button>
+              <button
+                className="answerBox"
+                style={{ backgroundColor: boxList[0].color }}
+                onClick={selectAnswerOne}
+              >
+                {boxList[0].answer}
+              </button>
+              <button
+                className="answerBox"
+                style={{ backgroundColor: boxList[1].color }}
+                onClick={selectAnswerTwo}
+              >
+                {boxList[1].answer}
+              </button>
+              <button
+                className="answerBox"
+                style={{ backgroundColor: boxList[2].color }}
+                onClick={selectAnswerThree}
+              >
+                {boxList[2].answer}
+              </button>
+              <button
+                className="answerBox"
+                style={{ backgroundColor: boxList[3].color }}
+                onClick={selectAnswerFour}
+              >
+                {boxList[3].answer}
+              </button>
             </section>
 
             <section className="confirmButton">
-              <button id="confirmBox" onClick={confirmBoxSelect}>{confirmBoxText}</button>
+              <button id="confirmBox" onClick={confirmBoxSelect}>
+                {confirmBoxText}
+              </button>
             </section>
           </main>
-        }
+        )}
 
-        { gameState === "end" &&
+        {gameState === "end" && (
           <main className="gameBox" id="endScreen">
             <section>
               <p>GAME OVER</p>
@@ -250,14 +276,17 @@ export default function NumberGame() {
             </section>
 
             <section>
-              <button onClick={() => {
-                restartGame()
-              }}>TRY AGAIN?
+              <button
+                onClick={() => {
+                  restartGame();
+                }}
+              >
+                TRY AGAIN?
               </button>
             </section>
           </main>
-        }
+        )}
       </main>
     </div>
-  )
+  );
 }
