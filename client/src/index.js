@@ -6,6 +6,7 @@ import store from "./components/store";
 import { Provider } from "react-redux";
 
 const root = ReactDOMClient.createRoot(document.getElementById("root"));
+console.log("STARTING CLIENT_SIDE");
 
 root.render(
   <Provider store={store}>

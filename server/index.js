@@ -3,6 +3,8 @@ const app = express();
 const cors = require("cors");
 const pool = require("./db");
 
+console.log("STARTING SERVER_SIDE");
+
 // middleware
 app.use(cors());
 app.use(express.json());
