@@ -1,3 +1,3 @@
 const { exec } = require("child_process");
 
-exec("npm start");
+exec("npm run start");
