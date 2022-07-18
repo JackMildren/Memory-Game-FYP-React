@@ -25,6 +25,32 @@ app.post("/users", async (req, res) => {
   }
 });
 
+//GET a user
+
+app.get("/users/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await pool.query("SELECT * FROM users WHERE user_id = $1", [
+      id,
+    ]);
+
+    res.json(user.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+
+//GET all users
+
+app.get("/users", async (req, res) => {
+  try {
+    const allUsers = await pool.query("SELECT * FROM users");
+    res.json(allUsers.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+
 //GET user score
 
 //UPDATE user score
