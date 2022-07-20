@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 
 const root = ReactDOMClient.createRoot(document.getElementById("root"));
 console.log("STARTING CLIENT_SIDE");
+console.log(process.env.DB_PASS);
 
 root.render(
   <Provider store={store}>
