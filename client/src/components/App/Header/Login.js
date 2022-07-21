@@ -73,7 +73,7 @@ export default function Login() {
     <div className="Login">
       {user === {} && <div id="signInDiv"></div>}
 
-      {user && (
+      {user !== {} && (
         <div>
           <button onClick={(e) => handleSignOut(e)}>Logout</button>
           <img src={user.picture} alt={user.name}></img>
