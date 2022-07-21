@@ -27,7 +27,6 @@ export default function ShapeGame() {
     ],
   ];
 
-  console.log(useSelector((state) => state.textSettings.value));
   const colorPalette = fullColorList.filter((arr) => arr[0] === colPal)[0];
 
   const questionColorList = colorPalette[1];
