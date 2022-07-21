@@ -1,9 +1,9 @@
-import { handleSignOut } from "../Header/Login";
+import { Login } from "../Header/Login";
 
 export default function User() {
   function resetData() {
     localStorage.clear();
-    handleSignOut();
+    Login.handleSignOut();
   }
 
   return (
