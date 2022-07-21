@@ -14,7 +14,6 @@ export const textSettingsUpdater = createSlice({
   reducers: {
     loadSavedSettings: (state) => {
       state.value = JSON.parse(localStorage.getItem("accessSettings"));
-      console.log("TEST");
       updateSavedSettings(state);
     },
     setLineHeight: (state, action) => {
