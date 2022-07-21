@@ -58,12 +58,13 @@ a:visited {
   position: fixed;
   bottom: 0;
   left: 0;
-  font-size: 100%;
+  font-size: 18px;
 }
 
-.accessWidgetButtons {
-  padding-top: 10%;
-  text-align: center;
+#accessWidgetModal {
+  font-size: 16px;
+  line-height: 20px;
+  word-spacing: 5px;
 }
 
 .modal {
@@ -173,4 +174,9 @@ a:visited {
 
 .confirmBox {
   margin-top: 5%;
+}
+
+.accessWidgetButtons {
+  padding-top: 10%;
+  text-align: center;
 }
