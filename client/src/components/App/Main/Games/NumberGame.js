@@ -143,15 +143,15 @@ export default function NumberGame() {
   function loadEndScreen() {
     setGameState("end");
     setQuestionNo(1);
-  }
-
-  function restartGame() {
-    setGameState("start");
 
     if (score > highScore) {
       setHighScore(score);
       localStorage.setItem("numHighScore", highScore);
     }
+  }
+
+  function restartGame() {
+    setGameState("start");
     setScore(0);
   }
 
