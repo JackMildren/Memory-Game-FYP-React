@@ -379,6 +379,9 @@ export default function ShapeGame() {
                     onClick={() => {
                       handleShapeSelect(shape);
                     }}
+                    onTap={() => {
+                      handleShapeSelect(shape);
+                    }}
                   />
                 ))}
               {questionMark && (
