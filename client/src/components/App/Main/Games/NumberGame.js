@@ -122,7 +122,7 @@ export default function NumberGame() {
     } else {
       let tempBoxList = resetSelection();
 
-      tempBoxList[correctBox] = updateBox(correctBox, null, "green");
+      tempBoxList[correctBox] = updateBox(correctBox, null, "limeGreen");
       if (selectedBox === correctBox) {
         setScore(score + 1);
       } else {
