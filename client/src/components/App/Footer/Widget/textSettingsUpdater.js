@@ -17,13 +17,21 @@ export const textSettingsUpdater = createSlice({
     setWordSpacing: (state, action) => {
       state.value.wordSpacing = action.payload;
     },
+    setColorPalette: (state, action) => {
+      state.value.colorPalette = action.payload;
+    },
     resetAll: (state) => {
       state.value = {};
     },
   },
 });
 
-export const { resetAll, setLineHeight, setFontSize, setWordSpacing } =
-  textSettingsUpdater.actions;
+export const {
+  resetAll,
+  setLineHeight,
+  setFontSize,
+  setWordSpacing,
+  setColorPalette,
+} = textSettingsUpdater.actions;
 
 export default textSettingsUpdater.reducer;

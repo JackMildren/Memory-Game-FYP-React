@@ -5,6 +5,7 @@ import {
   setLineHeight,
   setFontSize,
   setWordSpacing,
+  setColorPalette,
 } from "./textSettingsUpdater";
 
 export default function AccessibilityWidget() {
@@ -23,6 +24,10 @@ export default function AccessibilityWidget() {
     wordSpacing: {
       current: 0,
       values: ["100%", "200%", "300%"],
+    },
+    colorPalette: {
+      current: 0,
+      values: ["true", "prot", "deut", "trit"],
     },
   };
 
@@ -78,6 +83,20 @@ export default function AccessibilityWidget() {
     );
   }
 
+  function changeColorPalette() {
+    let tempSettings = { ...settings };
+
+    tempSettings.colorPalette.current++;
+    tempSettings.colorPalette.current %=
+      tempSettings.colorPalette.values.length;
+
+    dispatch(
+      setColorPalette(
+        tempSettings.colorPalette.values[tempSettings.colorPalette.current]
+      )
+    );
+  }
+
   return (
     <div className="AccessibilityWidget">
       {!widgetOpen && (
@@ -103,6 +122,9 @@ export default function AccessibilityWidget() {
               </button>
               <button id="wordSpacingBtn" onClick={() => increaseWordSpacing()}>
                 Word Spacing
+              </button>
+              <button id="colorPalette" onClick={() => changeColorPalette()}>
+                Colour Palette
               </button>
               <button id="resetBtn" onClick={() => resetAllTextSettings()}>
                 Reset All
