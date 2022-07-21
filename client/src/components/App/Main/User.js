@@ -1,12 +1,14 @@
-import React, { useEffect } from "react";
+import { handleSignOut } from "../Header/Login";
 
 export default function User() {
-  useEffect(() => {});
+  function resetData() {
+    localStorage.clear();
+    handleSignOut();
+  }
 
   return (
     <div className="User">
-      <h1>User</h1>
-      <p>some text</p>
+      <button onClick={() => resetData()}>RESET ALL USER DATA</button>
     </div>
   );
 }

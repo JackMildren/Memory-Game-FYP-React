@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import jwt_decode from "jwt-decode";
-import { createUser, getUser } from "../../../api/dbFuncs";
+// import { createUser, getUser } from "../../../api/dbFuncs";
 
 export default function Login() {
   const [user, setUser] = useState({});
@@ -9,11 +9,11 @@ export default function Login() {
     let userObject = jwt_decode(response.credential);
     setUser(userObject);
 
-    const setUserToDB = async (user) => {
-      console.log(user.length);
-      console.log(await createUser(user));
-    };
-    setUserToDB(response.credential);
+    // const setUserToDB = async (user) => {
+    //   console.log(user.length);
+    //   console.log(await createUser(user));
+    // };
+    // setUserToDB(response.credential);
 
     document.getElementById("signInDiv").hidden = true;
   }
@@ -21,7 +21,7 @@ export default function Login() {
   async function handleSignOut(event) {
     setUser({});
     document.getElementById("signInDiv").hidden = false;
-    console.log(await getUser(user));
+    // console.log(await getUser(user));
   }
 
   useEffect(() => {
