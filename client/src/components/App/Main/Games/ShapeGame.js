@@ -160,7 +160,6 @@ export default function ShapeGame() {
 
     const width = stageRef.attrs.width - border;
     const height = stageRef.attrs.height;
-    console.log(stageRef.attrs.width);
 
     const newShapeArray = [];
     for (let i = 0; i < shapeCount; i++) {
