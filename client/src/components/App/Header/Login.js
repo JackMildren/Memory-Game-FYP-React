@@ -3,7 +3,7 @@ import jwt_decode from "jwt-decode";
 // import { createUser, getUser } from "../../../api/dbFuncs";
 
 export default function Login() {
-  const INITIAL_USER = localStorage.getItem("user") || {};
+  const INITIAL_USER = JSON.parse(localStorage.getItem("user")) || {};
   const [user, setUser] = useState(INITIAL_USER);
 
   // Hash function by bryc (github.com/bryc/code)
@@ -47,12 +47,12 @@ export default function Login() {
       picture: userObject.picture,
     };
 
-    console.log(newUser);
-    localStorage.setItem("user", newUser);
+    localStorage.setItem("user", JSON.stringify(newUser));
   }
 
   async function handleSignOut(event) {
     setUser({});
+    localStorage.clear();
     // console.log(await getUser(user));
   }
 
@@ -68,7 +68,7 @@ export default function Login() {
       theme: "outline",
       size: "large",
     });
-  });
+  }, [user]);
 
   return (
     <div className="Login">
