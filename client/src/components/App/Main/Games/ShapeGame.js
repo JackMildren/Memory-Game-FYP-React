@@ -41,7 +41,7 @@ export default function ShapeGame() {
     ],
   ];
 
-  const colorPalette = fullColorList.filter((arr) => arr[0] === colPal);
+  const colorPalette = fullColorList.filter((arr) => arr[0] === colPal)[0];
 
   const questionColorList = colorPalette[1];
   const correctColor = colorPalette[2];
