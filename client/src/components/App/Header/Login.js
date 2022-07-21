@@ -68,7 +68,7 @@ export default function Login() {
       theme: "outline",
       size: "large",
     });
-  }, []);
+  });
 
   return (
     <div className="Login">
