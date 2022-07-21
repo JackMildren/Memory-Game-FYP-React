@@ -15,7 +15,9 @@ export default function ShapeGame() {
   const [gameState, setGameState] = useState("start");
   const [questionNo, setQuestionNo] = useState(0);
   const [score, setScore] = useState(0);
-  const [highScore, setHighScore] = useState(0);
+
+  const INITIAL_HIGH_SCORE = localStorage.getItem("shapeHighScore") || 0;
+  const [highScore, setHighScore] = useState(INITIAL_HIGH_SCORE);
 
   const [qShapes, setQShapes] = useState(null);
   const [aShapes, setAShapes] = useState(null);
@@ -57,7 +59,10 @@ export default function ShapeGame() {
     if (questionNo < TOTAL_QUESTIONS) {
       setQuestionNo(questionNo + 1);
     } else {
-      score > highScore && setHighScore(score);
+      if (score > highScore) {
+        setHighScore(score);
+        localStorage.setItem("shapeHighScore", score);
+      }
       loadEndScreen();
     }
   }

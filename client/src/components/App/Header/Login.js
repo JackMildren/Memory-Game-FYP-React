@@ -68,11 +68,11 @@ export default function Login() {
       theme: "outline",
       size: "large",
     });
-  }, [user]);
+  });
 
   return (
     <div className="Login">
-      {Object.keys(user).length == 0 && <div id="signInDiv"></div>}
+      {Object.keys(user).length === 0 && <div id="signInDiv"></div>}
 
       {Object.keys(user).length !== 0 && (
         <div>
