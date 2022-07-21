@@ -37,7 +37,7 @@ export default function Login() {
     const currentUser = localStorage.getItem("user").id;
     const newUserHash = hashJWT(response.credential);
 
-    if (currentUser !== newUserHash) {
+    if (currentUser === null || currentUser.id !== newUserHash.id) {
       localStorage.clear();
     }
 
@@ -47,6 +47,7 @@ export default function Login() {
       picture: userObject.picture,
     };
 
+    console.log(newUser);
     localStorage.setItem("user", newUser);
   }
 
