@@ -36,9 +36,6 @@ export default function Login() {
     const currentUser = localStorage.getItem("userID");
     const newUser = hashJWT(response.credential);
 
-    console.log(currentUser);
-    console.log(newUser);
-
     if (currentUser !== newUser) {
       localStorage.clear();
     }

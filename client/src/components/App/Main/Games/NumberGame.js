@@ -8,15 +8,17 @@ export default function NumberGame() {
   const [currentQuestion, setCurrentQuestion] = useState("x + y");
   const [questionNo, setQuestionNo] = useState(1);
   const [score, setScore] = useState(0);
-  const [highScore, setHighScore] = useState(0);
 
-  const INITIAL_STATE = [
+  const initialHighScore = localStorage.getItem("numHighScore") || 0;
+  const [highScore, setHighScore] = useState(initialHighScore);
+
+  const INITIAL_BOX_LIST = [
     { answer: "0", color: "lightblue" },
     { answer: "0", color: "lightblue" },
     { answer: "0", color: "lightblue" },
     { answer: "0", color: "lightblue" },
   ];
-  const [boxList, setBoxList] = useState([...INITIAL_STATE]);
+  const [boxList, setBoxList] = useState([...INITIAL_BOX_LIST]);
 
   const [confirmBoxText, setConfirmBoxText] = useState("CONFIRM");
   const [answerRevealed, setAnswerRevealed] = useState(false);
@@ -60,7 +62,7 @@ export default function NumberGame() {
     let newVal = getRndInteger(0, 3);
     setCorrectBox(newVal);
 
-    let tempBoxList = [...INITIAL_STATE];
+    let tempBoxList = [...INITIAL_BOX_LIST];
     for (let box = 0; box < boxList.length; box++) {
       let newNumber = answer;
 
@@ -148,6 +150,7 @@ export default function NumberGame() {
 
     if (score > highScore) {
       setHighScore(score);
+      localStorage.setItem("numHighScore", highScore);
     }
     setScore(0);
   }
