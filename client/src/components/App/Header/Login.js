@@ -71,9 +71,9 @@ export default function Login() {
 
   return (
     <div className="Login">
-      {user === {} && <div id="signInDiv"></div>}
+      {Object.keys(user).length == 0 && <div id="signInDiv"></div>}
 
-      {user !== {} && (
+      {Object.keys(user).length !== 0 && (
         <div>
           <button onClick={(e) => handleSignOut(e)}>Logout</button>
           <img src={user.picture} alt={user.name}></img>
