@@ -48,13 +48,10 @@ export default function Login() {
     };
 
     localStorage.setItem("user", newUser);
-
-    document.getElementById("signInDiv").hidden = true;
   }
 
   async function handleSignOut(event) {
     setUser({});
-    document.getElementById("signInDiv").hidden = false;
     // console.log(await getUser(user));
   }
 
@@ -74,13 +71,11 @@ export default function Login() {
 
   return (
     <div className="Login">
-      <div id="signInDiv"></div>
-      {Object.keys(user).length !== 0 && (
-        <button onClick={(e) => handleSignOut(e)}>Logout</button>
-      )}
+      {user === {} && <div id="signInDiv"></div>}
 
       {user && (
         <div>
+          <button onClick={(e) => handleSignOut(e)}>Logout</button>
           <img src={user.picture} alt={user.name}></img>
           <h3>{user.name}</h3>
         </div>
