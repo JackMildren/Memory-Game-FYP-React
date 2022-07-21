@@ -124,7 +124,7 @@ export default function AccessibilityWidget() {
                 Word Spacing
               </button>
               <button id="colorPalette" onClick={() => changeColorPalette()}>
-                Colour Palette
+                Shape Game Colour Palette
               </button>
               <button id="resetBtn" onClick={() => resetAllTextSettings()}>
                 Reset All

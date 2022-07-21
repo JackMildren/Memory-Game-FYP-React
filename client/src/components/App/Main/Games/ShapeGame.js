@@ -1,13 +1,53 @@
 import { Stage, Layer, RegularPolygon, Text } from "react-konva";
 import { useState, useRef, useEffect } from "react";
 import _ from "lodash";
+import { useSelector } from "react-redux";
 
 export default function ShapeGame() {
   let stageRef = useRef(null);
   let questionLayerRef = useRef(null);
   let answerLayerRef = useRef(null);
 
-  const colorList = ["hotpink", "blue", "green", "yellow", "orange", "purple"];
+  const colPal = useSelector((state) => state.textSettings.value.colorPalette);
+
+  const fullColorList = [
+    [
+      "true",
+      ["hotpink", "blue", "green", "yellow", "orange", "purple"],
+      "limeGreen",
+      "red",
+      "yellow",
+    ],
+    [
+      "prot",
+      ["hotpink", "blue", "green", "yellow", "orange", "purple"],
+      "limeGreen",
+      "red",
+      "yellow",
+    ],
+    [
+      "deut",
+      ["hotpink", "blue", "green", "yellow", "orange", "purple"],
+      "limeGreen",
+      "red",
+      "yellow",
+    ],
+    [
+      "trit",
+      ["hotpink", "blue", "green", "yellow", "orange", "purple"],
+      "limeGreen",
+      "red",
+      "yellow",
+    ],
+  ];
+
+  const colorPalette = fullColorList.filter((arr) => arr[0] === colPal);
+
+  const questionColorList = colorPalette[1];
+  const correctColor = colorPalette[2];
+  const incorrectColor = colorPalette[3];
+  const selectColor = colorPalette[4];
+
   const questionShapeCount = 3;
   const answerShapeCount = 4;
   const TOTAL_QUESTIONS = 10;
@@ -71,7 +111,8 @@ export default function ShapeGame() {
     let newArr = [];
     while (true) {
       const sides = Math.ceil(Math.random() * 3 + 3);
-      const color = colorList[Math.floor(Math.random() * colorList.length)];
+      const color =
+        questionColorList[Math.floor(Math.random() * questionColorList.length)];
       newArr = [sides, color];
 
       let valid = true;
@@ -135,7 +176,7 @@ export default function ShapeGame() {
           color: correctShape.color,
           radius: Math.min(80, width),
           strokeWidth: !questionLayer && selectedShape === i ? 5 : 1,
-          stroke: !questionLayer && selectedShape === i ? "yellow" : "black",
+          stroke: !questionLayer && selectedShape === i ? selectColor : "black",
           rotation: getRotation(correctShape.sides),
         };
       } else {
@@ -151,7 +192,7 @@ export default function ShapeGame() {
           color: color,
           radius: Math.min(80, width),
           strokeWidth: !questionLayer && selectedShape === i ? 5 : 1,
-          stroke: !questionLayer && selectedShape === i ? "yellow" : "black",
+          stroke: !questionLayer && selectedShape === i ? selectColor : "black",
           rotation: getRotation(sides),
         };
       }
@@ -202,10 +243,10 @@ export default function ShapeGame() {
   function checkCorrectAnswer() {
     const tempShapes = [...aShapes];
     if (selectedShape === correctBox) {
-      tempShapes[selectedShape].stroke = "limeGreen";
+      tempShapes[selectedShape].stroke = correctColor;
       setScore(score + 1);
     } else {
-      tempShapes[selectedShape].stroke = "red";
+      tempShapes[selectedShape].stroke = incorrectColor;
     }
     setAShapes(tempShapes);
     setConfirmBoxText("NEXT QUESTION");

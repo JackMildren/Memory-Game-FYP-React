@@ -4,7 +4,7 @@ export const textSettingsUpdater = createSlice({
   name: "textSettings",
 
   initialState: {
-    value: {},
+    value: { colorPalette: "true" },
   },
 
   reducers: {
