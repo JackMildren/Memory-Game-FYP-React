@@ -3,7 +3,8 @@ import jwt_decode from "jwt-decode";
 // import { createUser, getUser } from "../../../api/dbFuncs";
 
 export default function Login() {
-  const [user, setUser] = useState({});
+  const INITIAL_USER = localStorage.getItem("user") || {};
+  const [user, setUser] = useState(INITIAL_USER);
 
   // Hash function by bryc (github.com/bryc/code)
   function hashJWT(str, seed = 0) {
@@ -33,14 +34,20 @@ export default function Login() {
     // };
     // setUserToDB(response.credential);
 
-    const currentUser = localStorage.getItem("userID");
-    const newUser = hashJWT(response.credential);
+    const currentUser = localStorage.getItem("user").id;
+    const newUserHash = hashJWT(response.credential);
 
-    if (currentUser !== newUser) {
+    if (currentUser !== newUserHash) {
       localStorage.clear();
     }
 
-    localStorage.setItem("userID", newUser);
+    const newUser = {
+      id: newUserHash,
+      name: userObject.name,
+      picture: userObject.picture,
+    };
+
+    localStorage.setItem("user", newUser);
 
     document.getElementById("signInDiv").hidden = true;
   }

@@ -9,8 +9,8 @@ export default function NumberGame() {
   const [questionNo, setQuestionNo] = useState(1);
   const [score, setScore] = useState(0);
 
-  const initialHighScore = localStorage.getItem("numHighScore") || 0;
-  const [highScore, setHighScore] = useState(initialHighScore);
+  const INITIAL_HIGH_SCORE = localStorage.getItem("numHighScore") || 0;
+  const [highScore, setHighScore] = useState(INITIAL_HIGH_SCORE);
 
   const INITIAL_BOX_LIST = [
     { answer: "0", color: "lightblue" },
