@@ -34,7 +34,7 @@ export default function Login() {
     // };
     // setUserToDB(response.credential);
 
-    const currentUser = localStorage.getItem("user").id;
+    const currentUser = localStorage.getItem("user");
     const newUserHash = hashJWT(response.credential);
 
     if (currentUser === null || currentUser.id !== newUserHash.id) {
