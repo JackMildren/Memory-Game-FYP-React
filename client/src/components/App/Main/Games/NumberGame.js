@@ -146,7 +146,7 @@ export default function NumberGame() {
 
     if (score > highScore) {
       setHighScore(score);
-      localStorage.setItem("numHighScore", highScore);
+      localStorage.setItem("numHighScore", score);
     }
   }
 
