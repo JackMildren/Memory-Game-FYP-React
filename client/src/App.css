@@ -123,11 +123,14 @@ a:visited {
   border-radius: 500px;
   background-color: lightblue;
   text-decoration: none;
+  padding-left: 5%;
+  padding-right: 5%;
 }
 
 .answerBox {
   margin: auto;
-  width: 15%;
+  padding-left: 5%;
+  padding-right: 5%;
 }
 
 .gameBox button:hover {
