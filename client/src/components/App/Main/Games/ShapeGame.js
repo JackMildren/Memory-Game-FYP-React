@@ -19,25 +19,11 @@ export default function ShapeGame() {
       "yellow",
     ],
     [
-      "prot",
-      ["hotpink", "blue", "green", "yellow", "orange", "purple"],
-      "limeGreen",
-      "red",
-      "yellow",
-    ],
-    [
-      "deut",
-      ["hotpink", "blue", "green", "yellow", "orange", "purple"],
-      "limeGreen",
-      "red",
-      "yellow",
-    ],
-    [
-      "trit",
-      ["hotpink", "blue", "green", "yellow", "orange", "purple"],
-      "limeGreen",
-      "red",
-      "yellow",
+      "alt",
+      ["#E69F00", "#0072B2", "#009E73", "#F0E442"],
+      "#56B4E9",
+      "#D55E00",
+      "#F0E442",
     ],
   ];
 

@@ -27,7 +27,7 @@ export default function AccessibilityWidget() {
     },
     colorPalette: {
       current: 0,
-      values: ["true", "prot", "deut", "trit"],
+      values: ["true", "alt"],
     },
   };
 
