@@ -2,8 +2,10 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const pool = require("./db");
+require("dotenv").config();
 
 console.log("STARTING SERVER_SIDE");
+console.log(process.env.DB_PASS);
 
 // middleware
 app.use(cors());

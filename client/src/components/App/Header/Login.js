@@ -11,16 +11,17 @@ export default function Login() {
 
     const setUserToDB = async (user) => {
       console.log(user.length);
-      await createUser(user);
+      console.log(await createUser(user));
     };
     setUserToDB(response.credential);
 
     document.getElementById("signInDiv").hidden = true;
   }
 
-  function handleSignOut(event) {
+  async function handleSignOut(event) {
     setUser({});
     document.getElementById("signInDiv").hidden = false;
+    console.log(await getUser(user));
   }
 
   useEffect(() => {
