@@ -152,9 +152,15 @@ export default function ShapeGame() {
     }
 
     const borderMul = questionLayer ? 0.3 : 0.5;
-    const border = stageRef.attrs.width * borderMul;
+
+    let border = stageRef.attrs.width * borderMul;
+    if (!questionLayer && stageRef.attrs.width < 700) {
+      border *= 0.6;
+    }
+
     const width = stageRef.attrs.width - border;
     const height = stageRef.attrs.height;
+    console.log(stageRef.attrs.width);
 
     const newShapeArray = [];
     for (let i = 0; i < shapeCount; i++) {
@@ -166,7 +172,7 @@ export default function ShapeGame() {
           y: Math.floor(height * heightAdjust),
           sides: correctShape.sides,
           color: correctShape.color,
-          radius: Math.min(80, width),
+          radius: Math.min(80, width / 6),
           strokeWidth: !questionLayer && selectedShape === i ? 5 : 1,
           stroke: !questionLayer && selectedShape === i ? selectColor : "black",
           rotation: getRotation(correctShape.sides),
@@ -182,7 +188,7 @@ export default function ShapeGame() {
           y: Math.floor(height * heightAdjust),
           sides: sides,
           color: color,
-          radius: Math.min(80, width),
+          radius: Math.min(80, width / 6),
           strokeWidth: !questionLayer && selectedShape === i ? 5 : 1,
           stroke: !questionLayer && selectedShape === i ? selectColor : "black",
           rotation: getRotation(sides),
