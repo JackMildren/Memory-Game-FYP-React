@@ -2,6 +2,10 @@ p {
   font-size: 100%;
 }
 
+button {
+  cursor: pointer;
+}
+
 .body {
   margin-top: -1px;
   padding: 10px 10px;
@@ -119,10 +123,6 @@ a:visited {
   border-radius: 500px;
   background-color: lightblue;
   text-decoration: none;
-}
-
-.gameBox button {
-  cursor: pointer;
 }
 
 .answerBox {
