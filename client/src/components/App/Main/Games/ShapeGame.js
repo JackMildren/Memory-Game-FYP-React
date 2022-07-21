@@ -34,7 +34,6 @@ export default function ShapeGame() {
   const incorrectColor = colorPalette[3];
   const selectColor = colorPalette[4];
 
-  const questionShapeCount = 3;
   const answerShapeCount = 4;
   const TOTAL_QUESTIONS = 10;
 
@@ -44,6 +43,13 @@ export default function ShapeGame() {
 
   const INITIAL_HIGH_SCORE = localStorage.getItem("shapeHighScore") || 0;
   const [highScore, setHighScore] = useState(INITIAL_HIGH_SCORE);
+
+  const [difficultyBoxList, setDifficultyBoxList] = useState([
+    "yellow",
+    "lightblue",
+    "lightblue",
+  ]);
+  const [questionShapeCount, setQuestionShapeCount] = useState(3);
 
   const [qShapes, setQShapes] = useState(null);
   const [aShapes, setAShapes] = useState(null);
@@ -255,6 +261,17 @@ export default function ShapeGame() {
     gameLoop();
   }
 
+  function selectDifficulty(difficulty) {
+    let newDifficultyBoxList = [...difficultyBoxList];
+
+    for (let i = 0; i < newDifficultyBoxList.length; i++) {
+      newDifficultyBoxList[i] = difficulty === i ? "yellow" : "lightblue";
+    }
+
+    setDifficultyBoxList(newDifficultyBoxList);
+    setQuestionShapeCount(difficulty + 3);
+  }
+
   function handleShapeSelect(shape) {
     setAShapes(selectShape(shape.id));
   }
@@ -286,7 +303,33 @@ export default function ShapeGame() {
           </section>
 
           <section>
-            <button onClick={startGame}>START GAME</button>
+            <button
+              className="answerBox"
+              style={{ backgroundColor: difficultyBoxList[0] }}
+              onClick={() => selectDifficulty(0)}
+            >
+              EASY
+            </button>
+            <button
+              className="answerBox"
+              style={{ backgroundColor: difficultyBoxList[1] }}
+              onClick={() => selectDifficulty(1)}
+            >
+              MEDIUM
+            </button>
+            <button
+              className="answerBox"
+              style={{ backgroundColor: difficultyBoxList[2] }}
+              onClick={() => selectDifficulty(2)}
+            >
+              HARD
+            </button>
+          </section>
+
+          <section>
+            <button className="confirmBox" onClick={startGame}>
+              START GAME
+            </button>
           </section>
         </main>
       )}

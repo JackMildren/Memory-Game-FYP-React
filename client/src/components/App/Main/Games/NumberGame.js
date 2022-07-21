@@ -2,7 +2,6 @@ import { useState } from "react";
 
 export default function NumberGame() {
   // TODO - Make this a database request
-  const DIFFICULTY = 3;
 
   const [gameState, setGameState] = useState("start");
   const [currentQuestion, setCurrentQuestion] = useState("x + y");
@@ -19,6 +18,13 @@ export default function NumberGame() {
     { answer: "0", color: "lightblue" },
   ];
   const [boxList, setBoxList] = useState([...INITIAL_BOX_LIST]);
+
+  const [difficultyBoxList, setDifficultyBoxList] = useState([
+    "lightblue",
+    "yellow",
+    "lightblue",
+  ]);
+  const [difficulty, setDifficulty] = useState(2);
 
   const [confirmBoxText, setConfirmBoxText] = useState("CONFIRM");
   const [answerRevealed, setAnswerRevealed] = useState(false);
@@ -40,7 +46,7 @@ export default function NumberGame() {
 
     let n1 = getRndInteger(1, 10);
     let n2 = getRndInteger(1, 10);
-    let modifier = getRndInteger(0, DIFFICULTY - 1);
+    let modifier = getRndInteger(0, difficulty - 1);
 
     setCurrentQuestion(n1 + MODIFIER_LIST[modifier] + n2);
 
@@ -184,6 +190,17 @@ export default function NumberGame() {
     return tempBox;
   }
 
+  function selectDifficulty(difficulty) {
+    let newDifficultyBoxList = [...difficultyBoxList];
+
+    for (let i = 0; i < newDifficultyBoxList.length; i++) {
+      newDifficultyBoxList[i] = difficulty === i ? "yellow" : "lightblue";
+    }
+
+    setDifficultyBoxList(newDifficultyBoxList);
+    setDifficulty(difficulty + 1);
+  }
+
   function selectAnswerOne() {
     selectAnswer(0);
   }
@@ -214,7 +231,33 @@ export default function NumberGame() {
             </section>
 
             <section>
-              <button onClick={startGame}>START GAME</button>
+              <button
+                className="answerBox"
+                style={{ backgroundColor: difficultyBoxList[0] }}
+                onClick={() => selectDifficulty(0)}
+              >
+                EASY
+              </button>
+              <button
+                className="answerBox"
+                style={{ backgroundColor: difficultyBoxList[1] }}
+                onClick={() => selectDifficulty(1)}
+              >
+                MEDIUM
+              </button>
+              <button
+                className="answerBox"
+                style={{ backgroundColor: difficultyBoxList[2] }}
+                onClick={() => selectDifficulty(2)}
+              >
+                HARD
+              </button>
+            </section>
+
+            <section>
+              <button className="confirmBox" onClick={startGame}>
+                START GAME
+              </button>
             </section>
           </main>
         )}
@@ -261,7 +304,11 @@ export default function NumberGame() {
             </section>
 
             <section className="confirmButton">
-              <button id="confirmBox" onClick={confirmBoxSelect}>
+              <button
+                className="confirmBox"
+                id="confirmBox"
+                onClick={confirmBoxSelect}
+              >
                 {confirmBoxText}
               </button>
             </section>
