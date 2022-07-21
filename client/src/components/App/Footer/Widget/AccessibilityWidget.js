@@ -5,7 +5,6 @@ import {
   setLineHeight,
   setFontSize,
   setWordSpacing,
-  setFontFamily,
 } from "./textSettingsUpdater";
 
 export default function AccessibilityWidget() {
@@ -25,10 +24,6 @@ export default function AccessibilityWidget() {
       current: 0,
       values: ["100%", "200%", "300%"],
     },
-    textFont: {
-      current: 0,
-      values: ["Arial", "ODF"],
-    },
   };
 
   const [settings, setSettings] = useState({ ...INITIAL_STATE });
@@ -37,19 +32,6 @@ export default function AccessibilityWidget() {
 
   function switchWidget() {
     updateWidget(!widgetOpen);
-  }
-
-  function toggleFonts() {
-    let tempSettings = { ...settings };
-
-    tempSettings.textFont.current++;
-    tempSettings.textFont.current %= tempSettings.textFont.values.length;
-
-    let newFontFamily =
-      tempSettings.textFont.values[tempSettings.textFont.current];
-
-    setSettings(tempSettings);
-    dispatch(setFontFamily(newFontFamily));
   }
 
   function resetAllTextSettings() {
@@ -121,9 +103,6 @@ export default function AccessibilityWidget() {
               </button>
               <button id="wordSpacingBtn" onClick={() => increaseWordSpacing()}>
                 Word Spacing
-              </button>
-              <button id="dyslexicFontBtn" onClick={() => toggleFonts()}>
-                Dyslexic-Friendly Font
               </button>
               <button id="resetBtn" onClick={() => resetAllTextSettings()}>
                 Reset All
