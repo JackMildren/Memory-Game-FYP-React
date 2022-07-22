@@ -33,6 +33,13 @@ export default function AccessibilityWidget() {
 
   const [settings, setSettings] = useState({ ...INITIAL_STATE });
 
+  const shapebtnColorList = ["lightblue", "white"];
+  const INITIAL_PALETTE =
+    JSON.parse(localStorage.getItem("accessSettings")).colorPalette || 0;
+  const [shapeBtnColor, setShapeBtnColor] = useState(
+    INITIAL_PALETTE === "true" ? 0 : 1
+  );
+
   useEffect(() => {}, [widgetOpen]);
 
   function switchWidget() {
@@ -90,6 +97,8 @@ export default function AccessibilityWidget() {
     tempSettings.colorPalette.current %=
       tempSettings.colorPalette.values.length;
 
+    setShapeBtnColor((shapeBtnColor + 1) % 2);
+
     dispatch(
       setColorPalette(
         tempSettings.colorPalette.values[tempSettings.colorPalette.current]
@@ -123,7 +132,11 @@ export default function AccessibilityWidget() {
               <button id="wordSpacingBtn" onClick={() => increaseWordSpacing()}>
                 Word Spacing
               </button>
-              <button id="colorPalette" onClick={() => changeColorPalette()}>
+              <button
+                id="colorPalette"
+                onClick={() => changeColorPalette()}
+                style={{ backgroundColor: shapebtnColorList[shapeBtnColor] }}
+              >
                 Shape Game Colour Palette
               </button>
               <button id="resetBtn" onClick={() => resetAllTextSettings()}>
