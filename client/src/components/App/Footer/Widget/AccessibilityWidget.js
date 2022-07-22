@@ -34,6 +34,7 @@ export default function AccessibilityWidget() {
   const [settings, setSettings] = useState({ ...INITIAL_STATE });
 
   const shapebtnColorList = ["lightblue", "white"];
+  console.log(JSON.parse(localStorage.getItem("accessSettings")).colorPalette);
   const INITIAL_PALETTE =
     JSON.parse(localStorage.getItem("accessSettings")).colorPalette || 0;
   const [shapeBtnColor, setShapeBtnColor] = useState(
