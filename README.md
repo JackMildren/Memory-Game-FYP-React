@@ -21,6 +21,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser i
 ### `npm start`
 
 BACKEND INCOMPLETE - the front-end will still run but with no database functionality, the back-end will error and crash
+
 Runs the front and back end of the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser if one does not automatically start.
 
