@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+// User guide and home page React component
+
 export default class Home extends Component {
   render() {
     return (

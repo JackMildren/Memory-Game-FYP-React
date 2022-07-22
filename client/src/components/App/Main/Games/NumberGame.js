@@ -1,6 +1,12 @@
 import { useState } from "react";
 
+// Number game component
+// Provides a simple maths question and presents 4 answers
+// Score is saved and if higher than the record, high score is updated
+
 export default function NumberGame() {
+  // Initial state and constants set up
+
   // TODO - Make this a database request
 
   const [gameState, setGameState] = useState("start");
@@ -33,6 +39,7 @@ export default function NumberGame() {
 
   const TOTAL_QUESTIONS = 10;
 
+  // Primary question loop function
   function gameLoop() {
     if (questionNo < TOTAL_QUESTIONS) {
       getQuestion();
@@ -41,14 +48,18 @@ export default function NumberGame() {
     }
   }
 
+  // Generates the question, difficulty will change what operators
+  // are used in generating the question
+  // Will then generate the list of answers, with every incorrect
+  // answer offset by a random number
   function getQuestion() {
-    const MODIFIER_LIST = [" + ", " - ", " x "];
+    const OPERATOR_LIST = [" + ", " - ", " x "];
 
     let n1 = getRndInteger(1, 10);
     let n2 = getRndInteger(1, 10);
     let modifier = getRndInteger(0, difficulty - 1);
 
-    setCurrentQuestion(n1 + MODIFIER_LIST[modifier] + n2);
+    setCurrentQuestion(n1 + OPERATOR_LIST[modifier] + n2);
 
     function calculateAnswer(x, y) {
       switch (modifier) {
@@ -84,7 +95,7 @@ export default function NumberGame() {
     setSelectedBox(5);
   }
 
-  /// OnClick Functions
+  // OnClick event handlers
 
   function selectAnswer(inputNo) {
     if (answerRevealed) {
@@ -167,6 +178,7 @@ export default function NumberGame() {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
+  // Sets all boxes to the deselected colour
   function resetSelection() {
     let tempBoxList = [];
     for (let box = 0; box < boxList.length; box++) {
@@ -175,21 +187,21 @@ export default function NumberGame() {
     return tempBoxList;
   }
 
+  // Will update a single box and return it
   function updateBox(boxNo, newAnswer = null, newColor = null) {
     let tempBox = { ...boxList[boxNo] };
 
     if (newAnswer && tempBox.answer !== newAnswer) {
-      // console.log("updating box " + boxNo + " answer from " + tempBox.answer + " to " + newAnswer);
       tempBox.answer = newAnswer;
     }
     if (newColor && tempBox.color !== newColor) {
-      // console.log("updating box " + boxNo + " color from " + tempBox.color + " to " + newColor);
       tempBox.color = newColor;
     }
 
     return tempBox;
   }
 
+  // Updates the difficulty and difficulty button selection colour
   function selectDifficulty(difficulty) {
     let newDifficultyBoxList = [...difficultyBoxList];
 
@@ -199,22 +211,6 @@ export default function NumberGame() {
 
     setDifficultyBoxList(newDifficultyBoxList);
     setDifficulty(difficulty + 1);
-  }
-
-  function selectAnswerOne() {
-    selectAnswer(0);
-  }
-
-  function selectAnswerTwo() {
-    selectAnswer(1);
-  }
-
-  function selectAnswerThree() {
-    selectAnswer(2);
-  }
-
-  function selectAnswerFour() {
-    selectAnswer(3);
   }
 
   return (
@@ -276,28 +272,28 @@ export default function NumberGame() {
               <button
                 className="answerBox"
                 style={{ backgroundColor: boxList[0].color }}
-                onClick={selectAnswerOne}
+                onClick={() => selectAnswer(0)}
               >
                 {boxList[0].answer}
               </button>
               <button
                 className="answerBox"
                 style={{ backgroundColor: boxList[1].color }}
-                onClick={selectAnswerTwo}
+                onClick={() => selectAnswer(1)}
               >
                 {boxList[1].answer}
               </button>
               <button
                 className="answerBox"
                 style={{ backgroundColor: boxList[2].color }}
-                onClick={selectAnswerThree}
+                onClick={() => selectAnswer(2)}
               >
                 {boxList[2].answer}
               </button>
               <button
                 className="answerBox"
                 style={{ backgroundColor: boxList[3].color }}
-                onClick={selectAnswerFour}
+                onClick={() => selectAnswer(3)}
               >
                 {boxList[3].answer}
               </button>

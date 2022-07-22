@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+// Redux Slice, used to send accessibility settings states throughout
+// the app without needing to pass them each level manually
+
+// Checks if there is any stored preferences, if not assigns default value
 const initialState = JSON.parse(localStorage.getItem("accessSettings"))
   ? { ...JSON.parse(localStorage.getItem("accessSettings")) }
   : { colorPalette: "true" };

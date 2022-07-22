@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 
+// Navigation bar, using NavLink to switch to different "pages",
+// as React isn't initially designed for this
+
 export default class Navigation extends Component {
   render() {
     return (

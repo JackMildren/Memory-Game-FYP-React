@@ -3,7 +3,15 @@ import { useState, useRef, useEffect } from "react";
 import _ from "lodash";
 import { useSelector } from "react-redux";
 
+// Shape game component
+// Provides a set of shapes and when the user presses the ready button
+// one is hidden from view, a set of answer shapes are then displayed
+// the user must select which was the shape removed
+// Score is saved and if higher than the record, high score is updated
+
 export default function ShapeGame() {
+  // Initial state and constants set up
+
   let stageRef = useRef(null);
   let questionLayerRef = useRef(null);
   let answerLayerRef = useRef(null);
@@ -64,6 +72,7 @@ export default function ShapeGame() {
   const [correctBox, setCorrectBox] = useState(questionShapeCount + 1);
   const [correctShape, setCorrectShape] = useState(null);
 
+  // Updates shapes drawn which change in a variety of events
   useEffect(() => {
     if (stageRef.current) {
       // eslint-disable-next-line
@@ -78,6 +87,7 @@ export default function ShapeGame() {
     }
   }, [selectedShape, shapeHidden, gameState]);
 
+  // Primary question loop function
   function gameLoop() {
     setQShapes(null);
     setAShapes(null);
@@ -99,6 +109,7 @@ export default function ShapeGame() {
     }
   }
 
+  // Helper function to prevent repeat shapes in questions or answers
   function getSidesColour(shapeArray) {
     let newArr = [];
     while (true) {
@@ -130,6 +141,8 @@ export default function ShapeGame() {
     return newArr;
   }
 
+  // Some shapes generate at an inconsistent rotation to the design goals of the page
+  // This function offsets that
   function getRotation(sides) {
     switch (sides) {
       case 4:
@@ -141,7 +154,9 @@ export default function ShapeGame() {
     }
   }
 
+  // Primary shape generation function
   function generateShapes(questionLayer) {
+    // Set up inital variables based on the conditions during the function call
     const heightAdjust = questionLayer ? 0.25 : 0.75;
     const shapeCount = questionLayer ? questionShapeCount : answerShapeCount;
 
@@ -151,6 +166,7 @@ export default function ShapeGame() {
       setCorrectBox(newCorrectAnswer);
     }
 
+    // Adding a border for design purposes
     const borderMul = questionLayer ? 0.3 : 0.5;
 
     let border = stageRef.attrs.width * borderMul;
@@ -158,9 +174,13 @@ export default function ShapeGame() {
       border *= 0.6;
     }
 
+    // New width and height the shapes will be drawn within
     const width = stageRef.attrs.width - border;
     const height = stageRef.attrs.height;
 
+    // Sets the new array of shapes to be drawn with a large set of parameters
+    // This function could likely be shortened as a significant amount is repeated
+    // due to completely different inputs required for some of the parameters
     const newShapeArray = [];
     for (let i = 0; i < shapeCount; i++) {
       let newShape;
@@ -251,6 +271,8 @@ export default function ShapeGame() {
     setConfirmBoxText("NEXT QUESTION");
   }
 
+  // Change Game State
+
   function startGame() {
     setGameState("running");
     setScore(0);
@@ -267,6 +289,8 @@ export default function ShapeGame() {
     setScore(0);
     gameLoop();
   }
+
+  // OnClick event handlers
 
   function selectDifficulty(difficulty) {
     let newDifficultyBoxList = [...difficultyBoxList];

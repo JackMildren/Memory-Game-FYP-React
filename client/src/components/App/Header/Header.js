@@ -3,6 +3,8 @@ import Navigation from "./Navigation";
 import Login from "./Login";
 import Title from "./Title";
 
+// Intermediary React Header Class
+
 export default class Header extends Component {
   render() {
     return (

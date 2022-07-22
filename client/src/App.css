@@ -185,6 +185,10 @@ a:visited {
   white-space: pre;
 }
 
+.accessWidgetButton:hover {
+  background-color: white!important;
+}
+
 .Home p {
   padding-left: 10%;
   padding-right: 10%;

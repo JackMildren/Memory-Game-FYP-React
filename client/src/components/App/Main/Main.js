@@ -6,6 +6,9 @@ import NumberGame from "./Games/NumberGame";
 import ShapeGame from "./Games/ShapeGame";
 import User from "./User";
 
+// Intermediary React Main Class
+// Primarially used as router for different pages
+
 const Main = () => {
   return (
     <Routes>

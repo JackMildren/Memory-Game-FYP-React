@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import AccessibilityWidget from "./Widget/AccessibilityWidget";
 
+// Intermediary React Footer Class
+
 export default class Footer extends Component {
   render() {
     return (

@@ -2,11 +2,16 @@ import { useEffect, useState } from "react";
 import jwt_decode from "jwt-decode";
 // import { createUser, getUser } from "../../../api/dbFuncs";
 
+// Primary Login component, utilising Google's "Sign In With Google"
+
 export default function Login() {
+  // Initial States and Constants
+
   const INITIAL_USER = JSON.parse(localStorage.getItem("user")) || {};
   const [user, setUser] = useState(INITIAL_USER);
 
   // Hash function by bryc (github.com/bryc/code)
+  // This is used to hash user's JWTs to be used as a user ID, may remove later
   function hashJWT(str, seed = 0) {
     let h1 = 0xdeadbeef ^ seed,
       h2 = 0x41c6ce57 ^ seed;
@@ -24,6 +29,7 @@ export default function Login() {
     return 4294967296 * (2097151 & h2) + (h1 >>> 0);
   }
 
+  // When user successfully logs in through Google
   function handleCallbackResponse(response) {
     let userObject = jwt_decode(response.credential);
     setUser(userObject);
@@ -34,9 +40,13 @@ export default function Login() {
     // };
     // setUserToDB(response.credential);
 
+    // Saving some user information to the database (in this case local
+    // storage) to persist user account
     const currentUser = localStorage.getItem("user");
     const newUserHash = hashJWT(response.credential);
 
+    // Currently only support one user logged in per device as it will
+    // clear all data if a different user logs in
     if (currentUser === null || currentUser.id !== newUserHash.id) {
       localStorage.clear();
     }
@@ -50,12 +60,14 @@ export default function Login() {
     localStorage.setItem("user", JSON.stringify(newUser));
   }
 
+  // On user loggin out
   async function handleSignOut(event) {
     setUser({});
     localStorage.clear();
     // console.log(await getUser(user));
   }
 
+  // Set up Google authentication
   useEffect(() => {
     /* global google */
     google.accounts.id.initialize({

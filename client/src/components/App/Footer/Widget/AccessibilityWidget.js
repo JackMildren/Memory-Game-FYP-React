@@ -8,7 +8,11 @@ import {
   setColorPalette,
 } from "./textSettingsUpdater";
 
+// Accessibility widget component
+
 export default function AccessibilityWidget() {
+  // Initial set up of states and constants
+
   const [widgetOpen, updateWidget] = useState(false);
   const dispatch = useDispatch();
 
@@ -41,15 +45,25 @@ export default function AccessibilityWidget() {
     setShapeBtnColor(colPal === "true" ? 0 : 1);
   }, [colPal]);
 
+  // OnClick event handlers
+
+  // Opens and closes the widget
   function switchWidget() {
     updateWidget(!widgetOpen);
   }
 
+  // Resets the text settings
   function resetAllTextSettings() {
     setSettings(INITIAL_STATE);
     setShapeBtnColor(0);
     dispatch(resetAll());
   }
+
+  // All functions from here function practically identically,
+  // creating a temporary variable,
+  // cycling to the next value in the array,
+  // updating the state,
+  // then finally updating the redux store
 
   function increaseFontSize() {
     let tempSettings = { ...settings };
