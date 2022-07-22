@@ -1,6 +1,11 @@
+import { useDispatch } from "react-redux";
+import { resetAll } from "../Footer/Widget/textSettingsUpdater";
+
 export default function User() {
+  const dispatch = useDispatch();
+
   function resetData() {
-    localStorage.clear();
+    dispatch(resetAll());
   }
 
   return (
