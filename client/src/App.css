@@ -21,10 +21,6 @@ button {
   border-color: black;
 }
 
-.nav.collapse {
-  display: block!important;
-}
-
 .nav_div a {
   float: left;
   text-align: center;
@@ -178,5 +174,19 @@ a:visited {
 
 .accessWidgetButtons {
   padding-top: 10%;
+  text-align: center;  
+  break-after: always;
+}
+
+.accessWidgetButtons:after {
+  display: block;
+  content: "\a";
+  white-space: pre;
+}
+
+.Home p {
+  padding-left: 10%;
+  padding-right: 10%;
   text-align: center;
+  font-size: 120%;
 }

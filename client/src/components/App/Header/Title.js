@@ -4,7 +4,7 @@ export default class Title extends Component {
   render() {
     return (
       <div className="Title">
-        <h1>Memory Game FYP</h1>
+        <h1>Memory Game Final Year Project</h1>
       </div>
     );
   }

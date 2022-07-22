@@ -6,120 +6,51 @@ export default class Home extends Component {
       <div className="Home">
         <div className="body">
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-            interdum lectus sed dolor imperdiet tempor. Proin sagittis nec metus
-            id gravida. Integer facilisis erat non est mattis, vel fermentum
-            nunc bibendum. Etiam in quam non neque vulputate condimentum cursus
-            at erat. In eu pellentesque erat. Mauris aliquam ipsum eget mi
-            pretium, a convallis est euismod. Mauris lorem arcu, vestibulum at
-            fermentum nec, interdum non erat.
+            Welcome to Memory Game Final year Project! This website has been
+            designed to exercise your brain with the intention of assisting in
+            preventing cognitive decline in the elderly, in particular, those
+            who currently have dementia.
           </p>
 
           <p>
-            Curabitur a facilisis elit, ac consequat velit. Pellentesque
-            habitant morbi tristique senectus et netus et malesuada fames ac
-            turpis egestas. Sed auctor odio sit amet magna posuere mattis.
-            Phasellus ultricies ante at porta iaculis. Ut suscipit sed libero eu
-            egestas. Maecenas ante libero, porta et tempus non, auctor eu nulla.
-            Mauris in nunc sit amet massa feugiat placerat ac vel augue.
+            On this site you will find 2 games, a simple maths game and a shape
+            and colour based memory game. Both games have 3 levels of difficulty
+            which you can select on the start screen.
           </p>
 
           <p>
-            Pellentesque habitant morbi tristique senectus et netus et malesuada
-            fames ac turpis egestas. Curabitur mattis, arcu vitae bibendum
-            rutrum, erat justo facilisis leo, vel hendrerit augue odio in dui.
-            Maecenas a nisl libero. Praesent tempus rhoncus orci non eleifend.
-            Sed justo urna, rhoncus id ornare sit amet, finibus at nibh. Proin
-            cursus justo elit, eu volutpat tellus vulputate at. Suspendisse
-            luctus mauris gravida aliquet scelerisque. Maecenas pharetra leo a
-            metus aliquam elementum. Vestibulum non sodales dui. Nunc dictum et
-            massa vitae fermentum. Morbi sit amet egestas felis.
+            Use the tabs at the top of this site to navigate between pages and
+            games
           </p>
 
           <p>
-            Mauris eleifend quam nec sapien gravida, a ultricies nunc iaculis.
-            Ut sed porttitor neque, non eleifend dolor. Quisque in blandit nibh.
-            Nunc non luctus libero. Nulla et enim elit. Suspendisse varius massa
-            consequat, commodo justo eu, hendrerit sem. Nam dapibus mi accumsan
-            vestibulum euismod. Quisque eget est eget elit feugiat lobortis sit
-            amet at est. Sed vel ultricies risus.
+            To save your high scores and settings, log in with a google account
+            by clicking the button in the top right, this will redirect you to
+            google's login page.
           </p>
 
           <p>
-            Vestibulum pulvinar fringilla odio at ullamcorper. Aenean viverra
-            sapien sit amet elit commodo consequat. In hendrerit id ligula
-            convallis elementum. Nam semper erat at elit ultrices, eget dapibus
-            purus tincidunt. Morbi sed posuere mi. Donec consequat enim lorem,
-            nec consequat arcu commodo nec. Proin odio ante, egestas non aliquet
-            ut, laoreet eget ligula. Proin sit amet urna a justo rutrum
-            sollicitudin. Suspendisse magna enim, posuere sit amet mattis ut,
-            suscipit eu diam. Duis ut odio non dolor pretium volutpat et ac
-            nibh. Duis turpis ante, volutpat a lobortis non, facilisis sed est.
-            Pellentesque habitant morbi tristique senectus et netus et malesuada
-            fames ac turpis egestas. Curabitur tortor orci, iaculis eget egestas
-            in, feugiat et ligula. Proin pharetra, justo quis ultricies commodo,
-            urna mi imperdiet purus, et suscipit libero purus id nisl. Nullam
-            elementum ultricies nunc.
-          </p>
-        </div>
-
-        <div className="body">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-            interdum lectus sed dolor imperdiet tempor. Proin sagittis nec metus
-            id gravida. Integer facilisis erat non est mattis, vel fermentum
-            nunc bibendum. Etiam in quam non neque vulputate condimentum cursus
-            at erat. In eu pellentesque erat. Mauris aliquam ipsum eget mi
-            pretium, a convallis est euismod. Mauris lorem arcu, vestibulum at
-            fermentum nec, interdum non erat.
+            If you decide to clear your data and delete your account, navigate
+            to the User tab and select "Clear All User Data"
           </p>
 
           <p>
-            Curabitur a facilisis elit, ac consequat velit. Pellentesque
-            habitant morbi tristique senectus et netus et malesuada fames ac
-            turpis egestas. Sed auctor odio sit amet magna posuere mattis.
-            Phasellus ultricies ante at porta iaculis. Ut suscipit sed libero eu
-            egestas. Maecenas ante libero, porta et tempus non, auctor eu nulla.
-            Mauris in nunc sit amet massa feugiat placerat ac vel augue.
+            This site has designed to be as accessible as possible, as such, an
+            accessibility widget has been added to the bottom left of the page,
+            in this widget you can change the text size, word spacing, line
+            spacing and enable an alternate colour palette for the shape game.
           </p>
 
           <p>
-            Pellentesque habitant morbi tristique senectus et netus et malesuada
-            fames ac turpis egestas. Curabitur mattis, arcu vitae bibendum
-            rutrum, erat justo facilisis leo, vel hendrerit augue odio in dui.
-            Maecenas a nisl libero. Praesent tempus rhoncus orci non eleifend.
-            Sed justo urna, rhoncus id ornare sit amet, finibus at nibh. Proin
-            cursus justo elit, eu volutpat tellus vulputate at. Suspendisse
-            luctus mauris gravida aliquet scelerisque. Maecenas pharetra leo a
-            metus aliquam elementum. Vestibulum non sodales dui. Nunc dictum et
-            massa vitae fermentum. Morbi sit amet egestas felis.
+            To report any errors or bugs, please email me at
+            UP864756@myport.ac.uk or report an issue to the GitHub page at (
+            <a href="https://github.com/JackMildren/Memory-Game-FYP-React/issues">
+              This Link
+            </a>
+            )
           </p>
 
-          <p>
-            Mauris eleifend quam nec sapien gravida, a ultricies nunc iaculis.
-            Ut sed porttitor neque, non eleifend dolor. Quisque in blandit nibh.
-            Nunc non luctus libero. Nulla et enim elit. Suspendisse varius massa
-            consequat, commodo justo eu, hendrerit sem. Nam dapibus mi accumsan
-            vestibulum euismod. Quisque eget est eget elit feugiat lobortis sit
-            amet at est. Sed vel ultricies risus.
-          </p>
-
-          <p>
-            Vestibulum pulvinar fringilla odio at ullamcorper. Aenean viverra
-            sapien sit amet elit commodo consequat. In hendrerit id ligula
-            convallis elementum. Nam semper erat at elit ultrices, eget dapibus
-            purus tincidunt. Morbi sed posuere mi. Donec consequat enim lorem,
-            nec consequat arcu commodo nec. Proin odio ante, egestas non aliquet
-            ut, laoreet eget ligula. Proin sit amet urna a justo rutrum
-            sollicitudin. Suspendisse magna enim, posuere sit amet mattis ut,
-            suscipit eu diam. Duis ut odio non dolor pretium volutpat et ac
-            nibh. Duis turpis ante, volutpat a lobortis non, facilisis sed est.
-            Pellentesque habitant morbi tristique senectus et netus et malesuada
-            fames ac turpis egestas. Curabitur tortor orci, iaculis eget egestas
-            in, feugiat et ligula. Proin pharetra, justo quis ultricies commodo,
-            urna mi imperdiet purus, et suscipit libero purus id nisl. Nullam
-            elementum ultricies nunc.
-          </p>
+          <p>Have fun!</p>
         </div>
       </div>
     );

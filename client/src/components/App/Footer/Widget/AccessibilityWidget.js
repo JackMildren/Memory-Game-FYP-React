@@ -123,23 +123,40 @@ export default function AccessibilityWidget() {
             <h2>Accessibility Settings</h2>
 
             <div className="accessWidgetButtons">
-              <button id="lineSpacingBtn" onClick={() => increaseLineHeight()}>
+              <button
+                className="accessWidgetButton"
+                id="lineSpacingBtn"
+                onClick={() => increaseLineHeight()}
+              >
                 Line Spacing
               </button>
-              <button id="textSizeBtn" onClick={() => increaseFontSize()}>
+              <button
+                className="accessWidgetButton"
+                id="textSizeBtn"
+                onClick={() => increaseFontSize()}
+              >
                 Text Size
               </button>
-              <button id="wordSpacingBtn" onClick={() => increaseWordSpacing()}>
+              <button
+                className="accessWidgetButton"
+                id="wordSpacingBtn"
+                onClick={() => increaseWordSpacing()}
+              >
                 Word Spacing
               </button>
               <button
+                className="accessWidgetButton"
                 id="colorPalette"
                 onClick={() => changeColorPalette()}
                 style={{ backgroundColor: shapebtnColorList[shapeBtnColor] }}
               >
                 Shape Game Colour Palette
               </button>
-              <button id="resetBtn" onClick={() => resetAllTextSettings()}>
+              <button
+                className="accessWidgetButton"
+                id="resetBtn"
+                onClick={() => resetAllTextSettings()}
+              >
                 Reset All
               </button>
             </div>
