@@ -239,8 +239,10 @@ export default function ShapeGame() {
 
   function checkCorrectAnswer() {
     const tempShapes = [...aShapes];
+    tempShapes[correctBox].stroke = correctColor;
+    tempShapes[correctBox].strokeWidth = 10;
+
     if (selectedShape === correctBox) {
-      tempShapes[selectedShape].stroke = correctColor;
       setScore(score + 1);
     } else {
       tempShapes[selectedShape].stroke = incorrectColor;
