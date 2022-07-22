@@ -1,7 +1,7 @@
 {
   "name": "memory-game-fyp",
   "version": "1.0.0",
-  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "description": "Memorize! A set of games to stimulate your mind!",
   "main": "index.js",
   "scripts": {
     "client": "cd client && npm start",
@@ -12,6 +12,24 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "concurrently": "^7.2.2"
+    "concurrently": "^7.2.2",
+    "@reduxjs/toolkit": "^1.8.3",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.3.0",
+    "@testing-library/user-event": "^13.5.0",
+    "fs": "^0.0.1-security",
+    "jwt-decode": "^3.1.2",
+    "lodash": "^4.17.21",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-konva": "^18.2.1",
+    "react-redux": "^8.0.2",
+    "react-router-dom": "^6.3.0",
+    "react-scripts": "5.0.1",
+    "web-vitals": "^2.1.4",
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "express-promise-router": "^4.1.1",
+    "pg": "^8.7.3"
   }
 }
