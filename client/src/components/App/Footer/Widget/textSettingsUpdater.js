@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-  colorPalette: "true",
-};
+const initialState = JSON.parse(localStorage.getItem("accessSettings"))
+  ? { ...JSON.parse(localStorage.getItem("accessSettings")) }
+  : { colorPalette: "true" };
 
 export const textSettingsUpdater = createSlice({
   name: "textSettings",

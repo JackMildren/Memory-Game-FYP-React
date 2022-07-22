@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   resetAll,
   setLineHeight,
@@ -33,15 +33,9 @@ export default function AccessibilityWidget() {
 
   const [settings, setSettings] = useState({ ...INITIAL_STATE });
 
+  const colPal = useSelector((state) => state.textSettings.value.colorPalette);
   const shapebtnColorList = ["lightblue", "white"];
-  const INITIAL_PALETTE =
-    JSON.parse(localStorage.getItem("accessSettings")) || 0;
-  console.log(INITIAL_PALETTE);
-  const [shapeBtnColor, setShapeBtnColor] = useState(
-    INITIAL_PALETTE === "true" ? 0 : 1
-  );
-
-  useEffect(() => {}, [widgetOpen]);
+  const [shapeBtnColor, setShapeBtnColor] = useState(colPal === "true" ? 0 : 1);
 
   function switchWidget() {
     updateWidget(!widgetOpen);
