@@ -33,7 +33,7 @@ export const textSettingsUpdater = createSlice({
       updateSavedSettings(state);
     },
     resetAll: (state) => {
-      state.value = initialState;
+      state.value = { colorPalette: "true" };
       updateSavedSettings(state);
     },
   },

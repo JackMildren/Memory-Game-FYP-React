@@ -43,6 +43,7 @@ export default function AccessibilityWidget() {
 
   function resetAllTextSettings() {
     setSettings(INITIAL_STATE);
+    setShapeBtnColor(0);
     dispatch(resetAll());
   }
 
