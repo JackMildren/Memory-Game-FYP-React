@@ -19,15 +19,15 @@ export default function AccessibilityWidget() {
   let INITIAL_STATE = {
     lineHeight: {
       current: 0,
-      values: ["120%", "200%", "300%"],
+      values: ["120%", "150%", "200%"],
     },
     textSize: {
       current: 0,
-      values: ["100%", "200%", "300%"],
+      values: ["100%", "150%", "200%"],
     },
     wordSpacing: {
       current: 0,
-      values: ["100%", "200%", "300%"],
+      values: ["100%", "150%", "200%"],
     },
     colorPalette: {
       current: 0,
